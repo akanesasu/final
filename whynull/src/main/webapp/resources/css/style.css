@@ -1,0 +1,96 @@
+* {
+  font-family: "Noto Serif KR", serif;
+}
+/** a box to replace an ad */
+.ad {
+  border: 1px solid black;
+  height: 800px;
+}
+.body {
+  height: 800px;
+}
+/** the title to replace an logo */
+.logo_alt {
+  font-family: "Yeon Sung", cursive;
+}
+.ck-editor__editable {
+  min-height: 580px;
+  max-height: 580px;
+}
+
+.sep:before {
+  content: "|";
+  font-size: 0.9em;
+  font-weight: 300;
+  margin: 0.5em;
+  line-height: 0.2em;
+}
+
+/** Comment */
+.comment_wrapper > .comment_wrapper {
+  margin-left: 2rem;
+  margin-right: 0;
+  margin-top: 1rem;
+}
+.comment_item {
+  border: 2px solid #b9b9b9;
+}
+.comment_info {
+  background-color: #b9b9b9;
+  padding: 0 0.5rem;
+}
+.comment_text {
+  padding: 0 0.5rem;
+}
+.comment_choosed {
+  border: 2px solid red;
+}
+
+/** Board */
+.board {
+  min-height: 400px;
+  max-height: 400px;
+}
+.input-group-prepend,
+.input-group-append {
+  display: flex;
+}
+
+/** Pagination */
+.page-link {
+  color: #999;
+  border-color: #444;
+}
+.page-item.active .page-link {
+  z-index: 1;
+  color: #ccc;
+  font-weight: bold;
+  background-color: #333;
+  border-color: #444;
+}
+.page-link:focus,
+.page-link:hover {
+  color: #ccc;
+  background-color: #222;
+  border-color: #444;
+}
+
+/** Main page */
+.card-header {
+  background-color: rgb(183, 212, 242);
+}
+.card-header:hover {
+  background-color: rgb(98, 168, 239);
+}
+.list-group-item {
+  background-color: rgb(240, 237, 237);
+}
+.list-group-item:hover {
+  background-color: rgb(195, 192, 192);
+}
+li {
+  padding-right: 10px;
+}
+.FirstLineCard {
+  padding-right: 20px;
+}

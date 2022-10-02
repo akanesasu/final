@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Class-Path: log4j-slf4j-impl-2.17.2.jar spring-jdbc-5.3.20.jar spring-co
+ re-5.3.20.jar log4j-api-2.17.2.jar mariadb-java-client-2.7.6.jar spring
+ -aop-5.3.20.jar log4j-core-2.17.2.jar spring-beans-5.3.20.jar spring-tx
+ -5.3.20.jar spring-web-5.3.20.jar spring-jcl-5.3.20.jar spring-webmvc-5
+ .3.20.jar mybatis-3.5.10.jar log4jdbc-log4j2-jdbc4.1-1.16.jar spring-co
+ ntext-5.3.20.jar spring-expression-5.3.20.jar slf4j-api-1.7.25.jar myba
+ tis-spring-2.0.7.jar HikariCP-5.0.1.jar
+

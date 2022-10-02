@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.whynull.mapper.BoardMapper">
+    <select id="getList" resultType="org.whynull.domain.BoardDTO">
+        with board_temp as (
+            select row_number() over (order by post_num desc) as rn,
+                post_num, board_num, post_content, subject_content, writing_date, mem_id, post_view_count, post_title
+            from board use index(primary)
+        )
+
+        <![CDATA[
+        select post_num, board_num, post_content, subject_content, writing_date, mem_id, post_view_count, post_title
+	        from board_temp
+            where rn <= #{pageNum}*#{amount} and rn > (#{pageNum}-1)*#{amount};
+        ]]>
+    </select>
+
+    <insert id="insertSelectKey" parameterType="org.whynull.service.BoardServiceImpl">
+        <selectKey keyProperty="post_num" order="AFTER" resultType="Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        insert ignore into board (post_num, board_num, post_content, mem_id, post_title)
+            values (#{post_num}, #{board_num}, #{post_content}, #{mem_id}, #{post_title})
+    </insert>
+
+    <select id="read" resultType="org.whynull.domain.BoardDTO">
+        select * from board where post_num = #{post_num}
+    </select>
+
+    <select id="getTotal" resultType="int">
+        select count(*) from board where post_num > 0
+    </select>
+</mapper>
