@@ -1,10 +1,12 @@
 package org.whynull.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +20,6 @@ public class BoardDTO {
     private Date writing_date;
     private Long post_view_count;
     private String post_title;
+
+    private List<WriteDTO> filesList;
 }
