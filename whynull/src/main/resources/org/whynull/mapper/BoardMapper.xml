@@ -17,13 +17,9 @@
         ]]>
     </select>
 
-    <insert id="insertSelectKey" parameterType="org.whynull.service.BoardServiceImpl">
-        <selectKey keyProperty="post_num" order="AFTER" resultType="Long">
-            select LAST_INSERT_ID()
-        </selectKey>
-
-        insert ignore into board (post_num, board_num, post_content, mem_id, post_title)
-            values (#{post_num}, #{board_num}, #{post_content}, #{mem_id}, #{post_title})
+    <insert id="write" parameterType="org.whynull.service.BoardServiceImpl" useGeneratedKeys="true" keyProperty="post_num">
+        insert into board (post_num, board_num, subject_content, writing_date, mem_id, post_title, post_content)
+            values (#{post_num}, #{board_num}, #{subject_content}, now(), #{mem_id}, #{post_title}, #{post_content})
     </insert>
 
     <select id="read" resultType="org.whynull.domain.BoardDTO">
@@ -33,4 +29,8 @@
     <select id="getTotal" resultType="int">
         select count(*) from board where post_num > 0
     </select>
+
+    <update id="viewCount">
+        update board set post_view_count = post_view_count + 1 where post_num = #{post_num}
+    </update>
 </mapper>

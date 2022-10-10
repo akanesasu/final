@@ -2,30 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WHY NULL</title>
-
-    <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css"/>
-
-    <!-- FONTS-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&family=Yeon+Sung&display=swap" rel="stylesheet">
-</head>
-<body>
-<div class="container">
 <%@include file="../header.jsp"%>
 
+<body>
+<div class="container">
 <!-- BODY -->
 <div class="body">
     <div class="row">
         <div class="col-lg-10">
-            <h2 class="display-6" style="font-weight: bold">자유게시판</h2>
+            <h2 class="display-6 fw-bold">자유게시판</h2>
 
             <div class="text-end">
                 <ul class="nav mb-2 justify-content-end mb-md-0">
@@ -43,18 +28,23 @@
                     <thead>
                     <tr>
                         <th style="width:10%" class="text-center">글번호</th>
-                        <th style="width:60%" class="text-center">제목</th>
+                        <th style="width:10%" class="text-center">말머리</th>
+                        <th style="width:50%" class="text-center">제목</th>
                         <th style="width:10%" class="text-center">작성자</th>
-                        <th style="width:20%" class="text-center">작성일</th>
+                        <th style="width:10%" class="text-center">작성일</th>
+                        <th style="width:10%" class="text-center">조회수</th>
                     </tr>
                     </thead>
 
-                    <c:forEach items="${board_free}" var="board">
+                    <c:forEach items="${free}" var="board">
                         <tr>
                             <td class="text-center"><c:out value="${board.post_num}"/></td>
-                            <td class="text-center"><a class='move' href='<c:out value="${board.post_num}"/>'><c:out value="${board.post_title}"/></a></td>
+                            <td class="text-center"><c:out value="${board.subject_content}"/></td>
+                            <td class="text-center"><a href='/whynull/board/read?board_num=<c:out value="${board.board_num}"/>&post_num=<c:out value="${board.post_num}"/>'><c:out value="${board.post_title}"/></a></td>
+                            <%-- <td class="text-center"><a class='move' href='<c:out value="${board.post_num}"/>'><c:out value="${board.post_title}"/></a></td> --%>
                             <td class="text-center"><c:out value="${board.mem_id}"/></td>
                             <td class="text-center"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.writing_date}"/></td>
+                            <td class="text-center"><c:out value="${board.post_view_count}"/></td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -81,7 +71,7 @@
                         </form>
 
                         <div class="col-8 text-end">
-                            <a class="btn btn-outline-dark" href="board_write.html" role="button">글쓰기</a>
+                            <button id="regBtn" class="btn btn-outline-dark" href="write.jsp" role="button">글쓰기</button>
                         </div>
                     </div>
 
@@ -113,10 +103,28 @@
         </div>
     </div>
 </div>
+
+<%@include file="../footer.jsp"%>
 </div> <!-- container -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<%@include file="../footer.jsp"%>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#regBtn").on("click", function() {
+        self.location="/whynull/board/write";
+    });
 
+    var actionForm = $("#actionForm");
+
+    $('.move').on("click", function(e) {
+        e.preventDefault();
+        actionForm.append("<input type='hidden' name='board_num' value='" + $(this).attr("href") + "'>");
+        actionForm.append("<input type='hidden' name='post_num' value='" + $(this).attr("href") + "'>");
+        actionForm.attr("action", "/whynull/board/read");
+        actionForm.submit();
+    });
+});
+
+</script>
 </body>
 </html>
