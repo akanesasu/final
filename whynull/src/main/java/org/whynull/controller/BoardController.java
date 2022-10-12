@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.whynull.domain.BoardDTO;
 import org.whynull.domain.Criteria;
@@ -24,12 +25,12 @@ import java.util.List;
 public class BoardController {
     private final BoardService service;
 
-    @GetMapping("/free")
+    @GetMapping("/list")
     public void list(Criteria cri, Model model) {
         log.info("list // Criteria : " + cri);
-        model.addAttribute("free", service.getList(cri));
+        model.addAttribute("list", service.getList(cri));
         int total = service.getTotal(cri);
-        model.addAttribute("pageMaker", new PageDTO(cri, total));
+        model.addAttribute("page", new PageDTO(cri, total));
     }
 
     @GetMapping("/write")
@@ -37,23 +38,22 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String write(BoardDTO dto, RedirectAttributes rttr, Model model) {
+    public String write(BoardDTO dto, RedirectAttributes rttr) {
         log.info("write : " + dto);
         service.write(dto);
-        model.addAttribute("boardNum", dto.getBoard_num());
         rttr.addFlashAttribute("result", dto.getPost_num());
-        return "redirect:/board/free";
+        return "redirect:/board/list?boardNum=" + dto.getBoard_num() + "&pageNum=1";
     }
 
     @GetMapping("/read")
-    public void read(@RequestParam("board_num") Long board_num, @RequestParam("post_num") Long post_num, @ModelAttribute("cri") Criteria cri, Model model) {
+    public void read(@RequestParam("boardNum") Long board_num, @RequestParam("postNum") Long post_num, Model model) {
         log.info("/read");
         service.viewCount(post_num);
-        model.addAttribute("board", service.read(board_num, post_num));
+        model.addAttribute("read", service.read(board_num, post_num));
     }
 
     @GetMapping("/edit")
-    public void edit(@RequestParam("board_num") Long board_num, @RequestParam("post_num") Long post_num, @ModelAttribute("cri") Criteria cri, Model model) {
+    public void edit(@RequestParam("boardNum") Long board_num, @RequestParam("postNum") Long post_num, Model model) {
         log.info("/edit");
         model.addAttribute("board", service.read(board_num, post_num));
     }

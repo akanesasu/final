@@ -4,18 +4,6 @@
 
 <%@include file="../header.jsp"%>
 
-<style>
-.ck.ck-editor {
-	width: 80%;
-	max-width: 600px;
-	margin: 0 auto;
-}
-
-.ck-editor__editable {
-	height: 80vh;
-}
-</style>
-
 <script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
 
 <body>
@@ -27,21 +15,12 @@
     <div class="col-lg-10">
         <form role="form" action="/whynull/board/write" method="post">
             <h2 class="display-6 fw-bold" name="subject_content">
-                <%-- <c:choose>
-                    <c:when test="${boardNum eq 1}">
-
-                    </c:when>
-                    <c:when test="${boardNum eq 2}">
-                        <input type="hidden" name="post_num" value="2">정보
-                    </c:when>
-                    <c:when test="${boardNum eq 3}">
-                        <input type="hidden" name="post_num" value="3">홍보
-                    </c:when>
-                    <c:when test="${boardNum eq 4}">
-                        <input type="hidden" name="post_num" value="4">코드질답
-                    </c:when>
-                </c:choose> --%>
-                <input type="hidden" name="board_num" value="1">자유<span>게시판</span>
+                <c:choose>
+                    <c:when test="${param.board_num eq '1'}">자유게시판</c:when>
+                    <c:when test="${param.board_num eq '2'}">정보게시판</c:when>
+                    <c:when test="${param.board_num eq '3'}">홍보게시판</c:when>
+                    <c:when test="${param.board_num eq '4'}">코드질답게시판</c:when>
+                </c:choose>
             </h2>
             <div class="form-group mt-4 mb-2">
                 <div class="form-check form-check-inline">
@@ -65,6 +44,7 @@
                 <label class="label fw-bold" for="title" style="margin: 0 10px 0 0;">작성자</label>
                 <input type="text" name="mem_id" class="form-control w-75" id="mem_id" required>
             </div>
+            <input type="hidden" name="${param.board_num}" id="${param.board_num}">
             <textarea rows="1" cols="1" id="post_content" name="post_content"></textarea>
             <script>
                 var ckeditor_config = {
@@ -90,20 +70,6 @@
 </div> <!-- END BODY -->
 
 <script>
-$(document).ready(function(e) {
-    //var formObj = $("form[role='form']");
-    $("input[type='file']").change(function(e) {
-        var formData = new FormData();
-        $.ajax({
-            url: '/whynull/writeAjaxPost',
-            processData: false,
-            contentType: false,
-            data: formData,
-            formData,type: 'POST',
-            dataType: 'json',
-        });
-    });
-});
 </script>
 </body>
 </html>

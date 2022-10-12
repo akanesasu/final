@@ -1,6 +1,7 @@
 package org.whynull.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.whynull.domain.BoardDTO;
 import org.whynull.domain.Criteria;
 
@@ -8,8 +9,8 @@ import java.util.List;
 
 public interface BoardMapper {
     List<BoardDTO> getList(Criteria cri);
-    void write(BoardDTO board);
-    BoardDTO read(@Param("board_num") Long board_num, @Param("post_num") Long post_num);
+    void write(BoardDTO dto);
+    BoardDTO read(@Param("board_num") Long boardNum, @Param("post_num") Long postNum);
     int getTotal(Criteria cri);
     void viewCount(Long post_num);
 }

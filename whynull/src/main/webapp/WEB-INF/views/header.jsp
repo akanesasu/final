@@ -24,10 +24,10 @@
   </a>
 
   <ul class="nav col-md-5 mb-2 justify-content-center mb-md-0 fs-5">
-    <li><a class="nav-link px-4 link-dark" href="/whynull/board/free" role="button">자유</a></li>
-    <li><a class="nav-link px-4 link-dark" href="/whynull/board/info" role="button">정보</a></li>
-    <li><a class="nav-link px-4 link-dark" href="/whynull/board/pr" role="button">홍보</a></li>
-    <li><a class="nav-link px-4 link-dark" href="/whynull/board/code" role="button">코드질답</a></li>
+    <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=1&pageNum=1" role="button">자유</a></li>
+    <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=2&pageNum=1" role="button">정보</a></li>
+    <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=3&pageNum=1" role="button">홍보</a></li>
+    <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=4&pageNum=1" role="button">코드질답</a></li>
   </ul>
 
   <div class="row row-cols-lg-auto g-0">
