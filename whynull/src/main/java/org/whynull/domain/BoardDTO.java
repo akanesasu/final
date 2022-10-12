@@ -14,12 +14,12 @@ import java.util.List;
 public class BoardDTO {
     private Long post_num;
     private Long board_num;
-    private String post_content;
     private String subject_content;
-    private String mem_id;
     private Date writing_date;
+    private String mem_id;
     private Long post_view_count;
     private String post_title;
+    private String post_content;
 
     private List<WriteDTO> filesList;
 }

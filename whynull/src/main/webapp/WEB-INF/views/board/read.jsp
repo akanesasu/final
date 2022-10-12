@@ -10,27 +10,27 @@
     <!-- BODY -->
     <h2 class="display-6 fw-bold">자유게시판</h2>
     <hr/>
-    <div class="fs-6"><b><c:out value="${board.post_title}"/></b></div>
+    <div class="fs-6"><b><c:out value="${read.post_title}"/></b></div>
     <p class="mb-2"/>
 
     <div class="row">
-        <div class="col-6 text-start"><c:out value="${board.mem_id}"/></div>
+        <div class="col-6 text-start"><c:out value="${read.mem_id}"/></div>
         <div class="col-6 text-end">
             <span>작성일</span>
-            <span><fmt:formatDate value="${board.writing_date}" pattern="yyyy/MM/dd HH:mm:ss"/></span>
-            <span class="sep">|</span>
+            <span><fmt:formatDate value="${read.writing_date}" pattern="yyyy/MM/dd HH:mm:ss"/></span>
+            <span class="sep"></span>
             <span>조회수</span>
-            <span><c:out value="${board.post_view_count}"/></span>
-            <span class="sep">|</span>
+            <span><c:out value="${read.post_view_count}"/></span>
+            <span class="sep"></span>
             <span>댓글</span>
-            <span>2</span>
+            <span>#</span>
         </div>
     </div>
 
 
     <hr />
     <p>
-        <c:out value="${board.post_content}"/>
+        <c:out value="${read.post_content}"/>
     </p>
     <hr />
     <div class="container">

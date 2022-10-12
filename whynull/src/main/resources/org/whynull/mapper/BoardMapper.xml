@@ -3,23 +3,70 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.whynull.mapper.BoardMapper">
+    <sql id="subject_head">
+        <trim prefix="(" suffix=") and" prefixOverrides="OR">
+            <foreach collection="headArr" item='head'>
+                <choose>
+                    <when test="head == '10'.toString()">
+                        subject_content = '일반'
+                    </when>
+                    <when test="head == '20'.toString()">
+                        subject_content = '질문'
+                    </when>
+                    <when test="head == '30'.toString()">
+                        subject_content = 'IT'
+                    </when>
+                    <when test="head == '40'.toString()">
+                        subject_content = '공지'
+                    </when>
+                </choose>
+            </foreach>
+        </trim>
+    </sql>
+
+    <sql id="board_num">
+        <trim prefix="(" suffix=") and" prefixOverrides="OR">
+            <foreach collection="boardNumArr" item='boardNum'>
+                <choose>
+                    <when test="boardNum == '1'.toString()">
+                        board_num = 1
+                    </when>
+                    <when test="boardNum == '2'.toString()">
+                        board_num = 2
+                    </when>
+                    <when test="boardNum == '3'.toString()">
+                        board_num = 3
+                    </when>
+                    <when test="boardNum == '4'.toString()">
+                        board_num = 4
+                    </when>
+                </choose>
+            </foreach>
+        </trim>
+    </sql>
+    
     <select id="getList" resultType="org.whynull.domain.BoardDTO">
         with board_temp as (
             select row_number() over (order by post_num desc) as rn,
-                post_num, board_num, post_content, subject_content, writing_date, mem_id, post_view_count, post_title
-            from board use index(primary)
+                post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content
+        from board use index(primary)
         )
 
+        select post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content
+        from board_temp
+            where
+
+        <include refid="subject_head"></include>
+        <include refid="board_num"></include>
+
         <![CDATA[
-        select post_num, board_num, post_content, subject_content, writing_date, mem_id, post_view_count, post_title
-	        from board_temp
-            where rn <= #{pageNum}*#{amount} and rn > (#{pageNum}-1)*#{amount};
+                (rn <= #{pageNum}*#{amount} and rn > (#{pageNum}-1)*#{amount})
         ]]>
     </select>
 
-    <insert id="write" parameterType="org.whynull.service.BoardServiceImpl" useGeneratedKeys="true" keyProperty="post_num">
-        insert into board (post_num, board_num, subject_content, writing_date, mem_id, post_title, post_content)
-            values (#{post_num}, #{board_num}, #{subject_content}, now(), #{mem_id}, #{post_title}, #{post_content})
+    <insert id="write" parameterType="org.whynull.service.BoardServiceImpl" useGeneratedKeys="true" keyProperty="post_num" keyColumn="post_num">
+        insert into board (board_num, subject_content, writing_date, mem_id, post_title, post_content)
+            values (#{board_num}, #{subject_content}, now(), #{mem_id}, #{post_title}, #{post_content})
     </insert>
 
     <select id="read" resultType="org.whynull.domain.BoardDTO">
@@ -27,7 +74,10 @@
     </select>
 
     <select id="getTotal" resultType="int">
-        select count(*) from board where post_num > 0
+        select count(*) from board where
+        <include refid="subject_head"></include>
+        <include refid="board_num"></include>
+        post_num > 0
     </select>
 
     <update id="viewCount">

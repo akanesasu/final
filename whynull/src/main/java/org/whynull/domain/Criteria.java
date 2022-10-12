@@ -3,6 +3,10 @@ package org.whynull.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,13 +19,20 @@ public class Criteria {
     private String type;
     private String keyword;
 
-    public Criteria() {
-        this(1, 10);
+    private String head;
+    private Long boardNum;
+
+    public Criteria(int pageNum, Long boardNum) {
+        this.pageNum = pageNum;
+        this.boardNum = boardNum;
+        this.amount = 10;
     }
 
-    public Criteria(int pageNum, int amount) {
-        this.pageNum = pageNum;
-        this.amount = amount;
+    public String[] getHeadArr() {
+        return head == null ? new String[] {} : new String[] {head};
+    }
+    public String[] getBoardNumArr() {
+        return boardNum == null ? new String[] {} : new String[] {Long.toString(boardNum)};
     }
 }
 
