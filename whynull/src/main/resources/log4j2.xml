@@ -14,7 +14,7 @@
 
     <Loggers>
 
-        <Logger name="org.example" level="debug" />
+        <Logger name="org.whynull" level="debug" />
         <Logger name="org.springframework" level="info" />
         <Logger name="com.zaxxer.hikari" level="info" />
         <Logger name="org.apache.ibatis" level="info" />
