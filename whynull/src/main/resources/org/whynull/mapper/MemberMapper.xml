@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.whynull.mapper.MemberMapper">
+    <resultMap id="memberMap" type="org.whynull.domain.MemberDTO">
+        <id property="userId" column="userid"/>
+        <result property="userPw" column="userpw"/>
+        <result property="userName" column="username"/>
+        <result property="regDate" column="regdate"/>
+        <collection property="authList" resultMap="authMap"></collection>
+    </resultMap>
+    <resultMap id="authMap" type="org.whynull.domain.AuthDTO">
+        <result property="userId" column="userid"/>
+        <result property="auth" column="auth"/>
+    </resultMap>
+
+    <select id="read" resultMap="memberMap">
+        select mem.userid, userpw, username, enabled, regdate, auth
+            from member mem
+            left outer join member_auth auth
+                on mem.userid = auth.userid
+            where mem.userid = #{userid}
+    </select>
+</mapper>
