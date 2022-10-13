@@ -12,20 +12,44 @@
         <div class="col-lg-10">
             <h2 class="display-6 fw-bold">
                 <c:choose>
-                    <c:when test="${page.cri.boardNum eq '1'}">자유게시판</c:when>
-                    <c:when test="${page.cri.boardNum eq '2'}">정보게시판</c:when>
-                    <c:when test="${page.cri.boardNum eq '3'}">홍보게시판</c:when>
-                    <c:when test="${page.cri.boardNum eq '4'}">코드질답게시판</c:when>
+                    <c:when test="${page.cri.boardNum == '1'}">자유게시판</c:when>
+                    <c:when test="${page.cri.boardNum == '2'}">정보게시판</c:when>
+                    <c:when test="${page.cri.boardNum == '3'}">홍보게시판</c:when>
+                    <c:when test="${page.cri.boardNum == '4'}">코드질답게시판</c:when>
                 </c:choose>
             </h2>
             <div class="text-end">
                 <ul class="nav mb-2 justify-content-end mb-md-0">
-                    <li><a class="nav-link px-2 link-dark" href="#" role="button">베스트</a></li>
-                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(0)"><span class="fw-bold">전체</span></a></li>
-                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(10)">일반</a></li>
-                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(20)">질문</a></li>
-                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(30)">IT</a></li>
-                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(40)">공지</a></li>
+                    <c:choose>
+                        <c:when test="${page.cri.boardNum == '1'}">
+                            <c:forEach items="${headList}" var="outer" varStatus="status">
+                                <c:forEach items="${outer}" var="inner">
+                                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(${status.index})">${inner}</a></li>
+                                </c:forEach>
+                            </c:forEach>
+                        </c:when>
+                        <c:when test="${page.cri.boardNum == '2'}">
+                            <c:forEach items="${headList}" var="outer" varStatus="status">
+                                <c:forEach items="${outer}" var="inner">
+                                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(${status.index})">${inner}</a></li>
+                                </c:forEach>
+                            </c:forEach>
+                        </c:when>
+                        <c:when test="${page.cri.boardNum == '3'}">
+                            <c:forEach items="${headList}" var="outer" varStatus="status">
+                                <c:forEach items="${outer}" var="inner">
+                                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(${status.index})">${inner}</a></li>
+                                </c:forEach>
+                            </c:forEach>
+                        </c:when>
+                        <c:when test="${page.cri.boardNum == '4'}">
+                            <c:forEach items="${headList}" var="outer" varStatus="status">
+                                <c:forEach items="${outer}" var="inner">
+                                    <li><a class="nav-link px-2 link-dark" href="javascript:" onclick="searchHead(${status.index})">${inner}</a></li>
+                                </c:forEach>
+                            </c:forEach>
+                        </c:when>
+                    </c:choose>
                 </ul>
             </div>
 
@@ -46,9 +70,9 @@
                         <tr>
                             <td class="text-center"><c:out value="${board.post_num}"/></td>
                             <td class="text-center"><c:out value="${board.subject_content}"/></td>
-                            <td class="text-start px-2"><a class="read" href="/whynull/board/read?bdn=<c:out value='${board.board_num}'/>&ptn=<c:out value='${board.post_num}'/>" style="text-decoration:none; color:black;"><c:out value="${board.post_title}"/></a></td>
+                            <td class="text-start px-2"><a class="read" href="/whynull/board/read?bdn=<c:out value='${board.boardNum}'/>&ptn=<c:out value='${board.post_num}'/>" style="text-decoration:none; color:black;"><c:out value="${board.post_title}"/></a></td>
                             <td class="text-center"><c:out value="${board.mem_id}"/></td>
-                            <td class="text-center"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.writing_date}"/></td>
+                            <td class="text-center"><fmt:formatDate pattern="MM/dd HH:mm" value="${board.writing_date}"/></td>
                             <td class="text-center"><c:out value="${board.post_view_count}"/></td>
                         </tr>
                     </c:forEach>
@@ -131,7 +155,7 @@
 $(document).ready(function() {
     $("#regBtn").on("click", function() {
         let boardNum = $("#boardNum").val();
-        self.location="/whynull/board/write?board_num=" + boardNum;
+        self.location="/whynull/board/write?boardNum=" + boardNum;
     });
 
     let actionForm = $("#actionForm");

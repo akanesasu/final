@@ -4,52 +4,83 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.whynull.mapper.BoardMapper">
     <sql id="subject_head">
-        <trim prefix="(" suffix=") and" prefixOverrides="OR">
-            <foreach collection="headArr" item='head'>
+        <trim prefix=" subject_content =" suffix=" and" prefixOverrides="OR">
+            <foreach collection="boardNumArr" item='boardNum'>
                 <choose>
-                    <when test="head == '10'.toString()">
-                        subject_content = '일반'
+                    <when test="boardNum == '1'.toString()">
+                        <choose>
+                            <when test="head == '0'.toString()">'전체'</when>
+                            <when test="head == '1'.toString()">'인기'</when>
+                            <when test="head == '2'.toString()">'공지'</when>
+                            <when test="head == '3'.toString()">'일반'</when>
+                            <when test="head == '4'.toString()">'질문'</when>
+                            <when test="head == '5'.toString()">'IT'</when>
+                        </choose>
                     </when>
-                    <when test="head == '20'.toString()">
-                        subject_content = '질문'
+                    <when test="boardNum == '2'.toString()">
+                        <choose>
+                            <when test="head == '0'.toString()">'전체'</when>
+                            <when test="head == '1'.toString()">'인기'</when>
+                            <when test="head == '2'.toString()">'공지'</when>
+                            <when test="head == '3'.toString()">'소식통'</when>
+                            <when test="head == '4'.toString()">'팁'</when>
+                            <when test="head == '5'.toString()">'리뷰/후기'</when>
+                        </choose>
                     </when>
-                    <when test="head == '30'.toString()">
-                        subject_content = 'IT'
+                    <when test="boardNum == '3'.toString()">
+                        <choose>
+                            <when test="head == '0'.toString()">'전체'</when>
+                            <when test="head == '1'.toString()">'인기'</when>
+                            <when test="head == '2'.toString()">'공지'</when>
+                            <when test="head == '3'.toString()">'스터디'</when>
+                            <when test="head == '4'.toString()">'프로젝트'</when>
+                            <when test="head == '5'.toString()">'기타'</when>
+                        </choose>
                     </when>
-                    <when test="head == '40'.toString()">
-                        subject_content = '공지'
+                    <when test="boardNum == '4'.toString()">
+                        <choose>
+                            <when test="head == '0'.toString()">'전체'</when>
+                            <when test="head == '1'.toString()">'인기'</when>
+                            <when test="head == '2'.toString()">'공지'</when>
+                            <when test="head == '3'.toString()">'백엔드'</when>
+                            <when test="head == '4'.toString()">'프론트엔드'</when>
+                            <when test="head == '5'.toString()">'기타'</when>
+                        </choose>
                     </when>
                 </choose>
             </foreach>
         </trim>
     </sql>
 
-    <sql id="board_num">
-        <trim prefix="(" suffix=") and" prefixOverrides="OR">
+    <sql id="boardNum">
+        <trim prefix="board_num = " suffix=" and" prefixOverrides="OR">
             <foreach collection="boardNumArr" item='boardNum'>
                 <choose>
-                    <when test="boardNum == '1'.toString()">
-                        board_num = 1
-                    </when>
-                    <when test="boardNum == '2'.toString()">
-                        board_num = 2
-                    </when>
-                    <when test="boardNum == '3'.toString()">
-                        board_num = 3
-                    </when>
-                    <when test="boardNum == '4'.toString()">
-                        board_num = 4
-                    </when>
+                    <when test="boardNum == '1'.toString()">1</when>
+                    <when test="boardNum == '2'.toString()">2</when>
+                    <when test="boardNum == '3'.toString()">3</when>
+                    <when test="boardNum == '4'.toString()">4</when>
                 </choose>
             </foreach>
         </trim>
+    </sql>
+
+    <sql id="board_choose">
+        <foreach collection="boardNumArr" item='boardNum'>
+            <choose>
+                <when test="boardNum == '1'.toString()">board_free</when>
+                <when test="boardNum == '2'.toString()">board_info</when>
+                <when test="boardNum == '3'.toString()">board_pr</when>
+                <when test="boardNum == '4'.toString()">board_code</when>
+            </choose>
+        </foreach>
     </sql>
     
     <select id="getList" resultType="org.whynull.domain.BoardDTO">
         with board_temp as (
             select row_number() over (order by post_num desc) as rn,
                 post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content
-        from board use index(primary)
+        from <include refid="board_choose"></include> use index(primary)
         )
 
         select post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content
@@ -57,7 +88,7 @@
             where
 
         <include refid="subject_head"></include>
-        <include refid="board_num"></include>
+        <include refid="boardNum"></include>
 
         <![CDATA[
                 (rn <= #{pageNum}*#{amount} and rn > (#{pageNum}-1)*#{amount})
@@ -65,22 +96,22 @@
     </select>
 
     <insert id="write" parameterType="org.whynull.service.BoardServiceImpl" useGeneratedKeys="true" keyProperty="post_num" keyColumn="post_num">
-        insert into board (board_num, subject_content, writing_date, mem_id, post_title, post_content)
-            values (#{board_num}, #{subject_content}, now(), #{mem_id}, #{post_title}, #{post_content})
+        insert into <include refid="board_choose"></include> (board_num, subject_content, writing_date, mem_id, post_title, post_content)
+            values (#{boardNum}, #{subject_content}, now(), #{mem_id}, #{post_title}, #{post_content})
     </insert>
 
     <select id="read" resultType="org.whynull.domain.BoardDTO">
-        select * from board where post_num = #{post_num}
+        select * from <include refid="board_choose"></include> where post_num = #{post_num}
     </select>
 
     <select id="getTotal" resultType="int">
-        select count(*) from board where
+        select count(*) from <include refid="board_choose"></include> where
         <include refid="subject_head"></include>
-        <include refid="board_num"></include>
+        <include refid="boardNum"></include>
         post_num > 0
     </select>
 
     <update id="viewCount">
-        update board set post_view_count = post_view_count + 1 where post_num = #{post_num}
+        update <include refid="board_choose"></include> set post_view_count = post_view_count + 1 where post_num = #{post_num}
     </update>
 </mapper>
