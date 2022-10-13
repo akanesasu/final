@@ -16,10 +16,10 @@
         <form role="form" action="/whynull/board/write" method="post">
             <h2 class="display-6 fw-bold" name="subject_content">
                 <c:choose>
-                    <c:when test="${param.board_num eq '1'}">자유게시판</c:when>
-                    <c:when test="${param.board_num eq '2'}">정보게시판</c:when>
-                    <c:when test="${param.board_num eq '3'}">홍보게시판</c:when>
-                    <c:when test="${param.board_num eq '4'}">코드질답게시판</c:when>
+                    <c:when test="${param.boardNum eq '1'}">자유게시판</c:when>
+                    <c:when test="${param.boardNum eq '2'}">정보게시판</c:when>
+                    <c:when test="${param.boardNum eq '3'}">홍보게시판</c:when>
+                    <c:when test="${param.boardNum eq '4'}">코드질답게시판</c:when>
                 </c:choose>
             </h2>
             <div class="form-group mt-4 mb-2">
@@ -44,7 +44,7 @@
                 <label class="label fw-bold" for="title" style="margin: 0 10px 0 0;">작성자</label>
                 <input type="text" name="mem_id" class="form-control w-75" id="mem_id" required>
             </div>
-            <input type="hidden" name="${param.board_num}" id="${param.board_num}">
+            <input type="hidden" name="boardNum" id="boardNum" value="${param.boardNum}">
             <textarea rows="1" cols="1" id="post_content" name="post_content"></textarea>
             <script>
                 var ckeditor_config = {

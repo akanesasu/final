@@ -29,9 +29,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDTO read(Long board_num, Long post_num) {
+    public BoardDTO read(Long boardNum, Long post_num) {
         log.info("Get the article ==============================");
-        return mapper.read(board_num, post_num);
+        return mapper.read(boardNum, post_num);
     }
 
     @Override
@@ -46,13 +46,32 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<WriteDTO> getContentList(Long board_num, Long post_num) {
+    public List<WriteDTO> getContentList(Long boardNum, Long post_num) {
         log.info("getContentList by post_num : " + post_num);
-        return writeMapper.findByPostNum(board_num, post_num);
+        return writeMapper.findByPostNum(boardNum, post_num);
     }
 
     @Override
     public void viewCount(Long post_num) {
         mapper.viewCount(post_num);
+    }
+
+    @Override
+    public List<String> getHeadList(Criteria cri) {
+        if(cri.getBoardNum() == 1) {
+            cri.insertHeadFree();
+            return cri.getHeadFree();
+        } else if(cri.getBoardNum() == 2) {
+            cri.insertHeadInfo();
+            return cri.getHeadInfo();
+        } else if(cri.getBoardNum() == 3) {
+            cri.insertHeadPr();
+            return cri.getHeadPr();
+        } else if(cri.getBoardNum() == 4) {
+            cri.insertHeadCode();
+            return cri.getHeadCode();
+        }
+
+        return null;
     }
 }

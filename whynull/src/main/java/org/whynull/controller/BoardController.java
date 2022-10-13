@@ -28,6 +28,7 @@ public class BoardController {
     @GetMapping("/list")
     public void list(Criteria cri, Model model) {
         log.info("list // Criteria : " + cri);
+        model.addAttribute("headList", service.getHeadList(cri));
         model.addAttribute("list", service.getList(cri));
         int total = service.getTotal(cri);
         model.addAttribute("page", new PageDTO(cri, total));
@@ -42,25 +43,25 @@ public class BoardController {
         log.info("write : " + dto);
         service.write(dto);
         rttr.addFlashAttribute("result", dto.getPost_num());
-        return "redirect:/board/list?boardNum=" + dto.getBoard_num() + "&pageNum=1";
+        return "redirect:/board/list?boardNum=" + dto.getBoardNum() + "&pageNum=1";
     }
 
     @GetMapping("/read")
-    public void read(@RequestParam("boardNum") Long board_num, @RequestParam("postNum") Long post_num, Model model) {
+    public void read(@RequestParam("boardNum") Long boardNum, @RequestParam("postNum") Long post_num, Model model) {
         log.info("/read");
         service.viewCount(post_num);
-        model.addAttribute("read", service.read(board_num, post_num));
+        model.addAttribute("read", service.read(boardNum, post_num));
     }
 
     @GetMapping("/edit")
-    public void edit(@RequestParam("boardNum") Long board_num, @RequestParam("postNum") Long post_num, Model model) {
+    public void edit(@RequestParam("boardNum") Long boardNum, @RequestParam("postNum") Long post_num, Model model) {
         log.info("/edit");
-        model.addAttribute("board", service.read(board_num, post_num));
+        model.addAttribute("board", service.read(boardNum, post_num));
     }
 
     @GetMapping(value="/getContentList", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<WriteDTO>> getContentList(Long board_num, Long post_num) {
+    public ResponseEntity<List<WriteDTO>> getContentList(Long boardNum, Long post_num) {
         log.info("getContentList : " + post_num);
-        return new ResponseEntity<>(service.getContentList(board_num, post_num), HttpStatus.OK);
+        return new ResponseEntity<>(service.getContentList(boardNum, post_num), HttpStatus.OK);
     }
 }

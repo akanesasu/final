@@ -9,9 +9,10 @@ import java.util.List;
 
 public interface BoardService {
     void write(BoardDTO dto);
-    BoardDTO read(Long board_num, Long post_num);
+    BoardDTO read(Long boardNum, Long post_num);
     List<BoardDTO> getList(Criteria cri);
     int getTotal(Criteria cri);
-    List<WriteDTO> getContentList(Long board_num, Long post_num);
+    List<WriteDTO> getContentList(Long boardNum, Long post_num);
     void viewCount(Long post_num);
+    List<String> getHeadList(Criteria cri);
 }
