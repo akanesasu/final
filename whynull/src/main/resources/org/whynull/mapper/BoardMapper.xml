@@ -10,41 +10,33 @@
                     <when test="boardNum == '1'.toString()">
                         <choose>
                             <when test="head == '0'.toString()">'전체'</when>
-                            <when test="head == '1'.toString()">'인기'</when>
-                            <when test="head == '2'.toString()">'공지'</when>
-                            <when test="head == '3'.toString()">'일반'</when>
-                            <when test="head == '4'.toString()">'질문'</when>
-                            <when test="head == '5'.toString()">'IT'</when>
+                            <when test="head == '1'.toString()">'일반'</when>
+                            <when test="head == '2'.toString()">'질문'</when>
+                            <when test="head == '3'.toString()">'IT'</when>
                         </choose>
                     </when>
                     <when test="boardNum == '2'.toString()">
                         <choose>
                             <when test="head == '0'.toString()">'전체'</when>
-                            <when test="head == '1'.toString()">'인기'</when>
-                            <when test="head == '2'.toString()">'공지'</when>
-                            <when test="head == '3'.toString()">'소식통'</when>
-                            <when test="head == '4'.toString()">'팁'</when>
-                            <when test="head == '5'.toString()">'리뷰/후기'</when>
+                            <when test="head == '1'.toString()">'소식통'</when>
+                            <when test="head == '2'.toString()">'팁'</when>
+                            <when test="head == '3'.toString()">'리뷰/후기'</when>
                         </choose>
                     </when>
                     <when test="boardNum == '3'.toString()">
                         <choose>
                             <when test="head == '0'.toString()">'전체'</when>
-                            <when test="head == '1'.toString()">'인기'</when>
-                            <when test="head == '2'.toString()">'공지'</when>
-                            <when test="head == '3'.toString()">'스터디'</when>
-                            <when test="head == '4'.toString()">'프로젝트'</when>
-                            <when test="head == '5'.toString()">'기타'</when>
+                            <when test="head == '1'.toString()">'스터디'</when>
+                            <when test="head == '2'.toString()">'프로젝트'</when>
+                            <when test="head == '3'.toString()">'기타'</when>
                         </choose>
                     </when>
                     <when test="boardNum == '4'.toString()">
                         <choose>
                             <when test="head == '0'.toString()">'전체'</when>
-                            <when test="head == '1'.toString()">'인기'</when>
-                            <when test="head == '2'.toString()">'공지'</when>
-                            <when test="head == '3'.toString()">'백엔드'</when>
-                            <when test="head == '4'.toString()">'프론트엔드'</when>
-                            <when test="head == '5'.toString()">'기타'</when>
+                            <when test="head == '1'.toString()">'백엔드'</when>
+                            <when test="head == '2'.toString()">'프론트엔드'</when>
+                            <when test="head == '3'.toString()">'기타'</when>
                         </choose>
                     </when>
                 </choose>
@@ -79,11 +71,11 @@
     <select id="getList" resultType="org.whynull.domain.BoardDTO">
         with board_temp as (
             select row_number() over (order by post_num desc) as rn,
-                post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content
+                post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content, post_good_count
         from <include refid="board_choose"></include> use index(primary)
         )
 
-        select post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content
+        select post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content, post_good_count
         from board_temp
             where
 

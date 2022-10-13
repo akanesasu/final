@@ -20,9 +20,13 @@ public class BoardDTO {
     private Long post_view_count;
     private String post_title;
     private String post_content;
+    private Long post_good_count;
 
     private List<WriteDTO> filesList;
     public String[] getBoardNumArr() {
+        return boardNum == null ? new String[] {} : new String[] {Long.toString(boardNum)};
+    }
+    public String[] getPostGoodCountArr() {
         return boardNum == null ? new String[] {} : new String[] {Long.toString(boardNum)};
     }
 }
