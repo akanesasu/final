@@ -1,70 +1,63 @@
-<!doctype html>
-<html lang="en">
-
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Login</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <!-- BOOTSTRAP -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/style.css" />
 
-<style>
-    #abc {
+        <!-- FONTS-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&family=Yeon+Sung&display=swap" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <style>
+    a {
         color: black;
         text-decoration: none;
     }
 
-    #abc :hover {
-        color: black;
-        text-decoration: underline;
-    }
-
-    #abc1 {
-        color: #677077;
+    .code {
+        color: #A9B7C6;
         text-decoration: none;
     }
-
-    #codeL {
-        /* margin-top: 50px;
-        width: 55%; */
-        background-color: #191e1e;
-
-        /* box-shadow: 0 9px 15px 0 rgb(0, 0, 0/20%);
-        border-radius: 5px;
-        padding: 60px; */
+    .code_import {
+        color: #CC7832;
+    }
+    .code_anno {
+        color: #BBB529;
     }
 
-    #ip {
-        border:none;
-    }
 
-    input:focus {
-        border-width:0;
-    }
-
-    #ip, #ip:focus {
-            border-width: 0;
-            outline: none;
-    }
-</style>
+    </style>
 </head>
 <body>
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5 ">
-        <div class="hellow col-lg-7 text-center text-lg-start text-white" style="height: 450px; background-color: #191e1e;">
-            <samll class=" fw-bold lh-1 mb-3 ">System.out.println("HELLO WHY NULL.")</samll>
-            <p> </p>
-            <!-- <small class="col-lg-10 fs-4    " data-bs-toggle="modal" data-bs-target="#exampleModal">HELLO WHY NULL.</small> -->
-
-            <button type="button" class="btn btn-black text-white " data-bs-toggle="modal" data-bs-target="#exampleModal" >
-                HELLO WHY NULL.
-            </button>
+        <div class="col-lg-7 p-5" style="height: 450px; background-color: #191e1e;">
+            <p class="code">
+                <span class="code_import">package</span> org.whynull.controller;<br>
+                <br>
+                <span class="code_import">import</span> lombok.extern.log4j.Log4j2;<br>
+                <span class="code_import">import</span> org.springframework.stereotype.Controller;<br>
+                <span class="code_import">import</span> org.springframework.web.bind.annotation.GetMapping;<br>
+                <br>
+                <span class="code_anno">@Controller</span><br>
+                <span class="code_anno">@Log4j2</span><br>
+                <span class="code_import">public class</span> LoginController {<br>
+                <span class="code_anno" style="padding-left: 2rem">@GetMapping</span>(<span style="color: #56e27a;">"/login"</span>)<br>
+                    <span class="import" style="padding-left: 2rem">public void</span> login() {<br>
+                        <span style="padding-left: 4rem">log.info("ID : " + <span style="color:white;">whynull</span>);<br></span>
+                        <span style="padding-left: 4rem">log.info("PW : " + <span style="color:white;">*********</span>);<br></span>
+                    <span style="padding-left: 2rem">}<br></span>
+                }
+            </p>
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
             <form class="p-4 p-md-5 border rounded-3 bg-light">
@@ -76,21 +69,17 @@
                     <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
                     <label for="floatingPassword">비밀번호</label>
                 </div>
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-id"> 아이디 저장
-                    </label>
-                    <div class="user" id="abc">
-                        <a href="create account" class="create account" id="abc">회원가입</a>
-
-                        <a href="idpwfind" class="idpw-find" id="abc">아이디/비밀번호 찾기</a>
-
-                    </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="remember-id"> 아이디 저장</label>
+                </div>
+                <div class="d-flex my-3" style="justify-content: space-evenly">
+                    <a href="/whynull/member/signin" id="signin"><small>회원가입</small></a>
+                    <a href="/whynull/member/forgot" id="forgot"><small>아이디/비밀번호 찾기</small></a>
                 </div>
 
                 <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
                 <hr class="my-4">
-                <small class="text-muted">회원가입을 클릭하면 이용약관에 동의하게 됩니다.</small>
+                <div class="text-center"><small class="text-muted">회원으로 가입하면 이용약관에 동의하게 됩니다.</small></div>
             </form>
         </div>
     </div>
@@ -103,47 +92,7 @@
             <div class="container col-xl-10 col-xxl-8 px-4 py-5">
                 <div class="row align-items-center g-lg-5 py-5">
                     <div class="col-lg-7 text-center text-lg-start " id="codeL" style="height: 450px;">
-                        <p>
-                            <span id="code1" style="color: #85d9eb;"> @SpringBootApplication <br>
-                                    @RestController </span> <br>
-                            <span style="color: #56e27a;"> ID :</span>
-                                <input type="id" id="ip" style="background-color: #191e1e; color:white " >
-                             <br><br>
 
-                            <span style="color: #85d9eb;"> @GetMapping</span>
-                            <span style="color: #d4f088;">"/Helloworld"</span> <br>
-                            <span style="color: #56e27a;">PW :</span> <span style="color: white;">
-                                <input type="password" id="ip" style="background-color: #191e1e; color:white" >
-                            </span><br><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;">
-                                <button class="btn btn-lg btn-block" type="submit" style="color: white;">Login</button>
-                            </span>
-                        </p>
-                    </div>
-                    <div class="col-md-10 mx-auto col-lg-5">
-                        <form class="p-4 p-md-5 border rounded-3 bg-light">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="ID">
-                                <label for="floatingInput">아이디</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                                <label for="floatingPassword">비밀번호</label>
-                            </div>
-                            <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" value="remember-id"> 아이디 저장
-                                </label>
-                                <div class="user">
-                                    <a href="create account" class="create account" id="abc">회원가입</a>
-                                    <a href="idpwfind" class="idpw-find" id="abc">아이디/비밀번호 찾기</a>
-                                </div>
-                            </div>
-
-                            <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
-                            <hr class="my-4">
-                            <small class="text-muted">회원가입을 클릭하면 이용약관에 동의하게 됩니다.</small>
-                        </form>
                     </div>
                 </div>
             </div>
