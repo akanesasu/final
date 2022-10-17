@@ -15,11 +15,16 @@
         <result property="auth" column="auth"/>
     </resultMap>
 
-    <select id="read" resultMap="memberMap">
+    <select id="login" resultMap="memberMap">
         select mem.userid, userpw, username, enabled, regdate, auth
             from member mem
             left outer join member_auth auth
                 on mem.userid = auth.userid
             where mem.userid = #{userid}
     </select>
+
+    <insert id="signin" parameterType="org.whynull.service.MemberServiceImpl">
+        insert into member (userid, userpw, username)
+            values (#{userId}, #{userPw}, #{userName})
+    </insert>
 </mapper>

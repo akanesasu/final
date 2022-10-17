@@ -17,7 +17,7 @@ public class whynullUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.warn("Load user by username : " + username);
-        MemberDTO dto = mapper.read(username);
+        MemberDTO dto = mapper.login(username);
         log.warn("queried by membermapper : " + dto);
         return dto == null ? null : new CustomUser(dto);
     }
