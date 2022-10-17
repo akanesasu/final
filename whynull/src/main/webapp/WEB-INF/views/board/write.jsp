@@ -48,7 +48,7 @@
             <textarea rows="1" cols="1" id="post_content" name="post_content"></textarea>
             <script>
                 var ckeditor_config = {
-                    resize_enaleb : false,
+                    resize_enabled : false,
                     enterMode : CKEDITOR.ENTER_BR,
                     shiftEnterMode : CKEDITOR.ENTER_P,
                     filebrowserUploadUrl : "#"
