@@ -7,18 +7,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.whynull.domain.MemberDTO;
 import org.whynull.mapper.MemberMapper;
-import org.whynull.security.domain.CustomUser;
+import org.whynull.security.domain.WhynullUser;
 
 @RequiredArgsConstructor
 @Log4j2
-public class whynullUserDetailsService implements UserDetailsService {
+public class WhynullUserDetailsService implements UserDetailsService {
     private final MemberMapper mapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.warn("Load user by username : " + username);
-        MemberDTO dto = mapper.login(username);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        log.warn("Load user by username : " + userName);
+        MemberDTO dto = mapper.login(userName);
         log.warn("queried by membermapper : " + dto);
-        return dto == null ? null : new CustomUser(dto);
+        return dto == null ? null : new WhynullUser(dto);
     }
 }

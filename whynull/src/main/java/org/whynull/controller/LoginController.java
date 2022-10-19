@@ -14,7 +14,6 @@ import org.whynull.service.MemberService;
 
 @Controller
 @Log4j2
-@RequestMapping("/member/*")
 @RequiredArgsConstructor
 public class LoginController {
     private final MemberService service;
@@ -49,16 +48,16 @@ public class LoginController {
         log.info("post logout");
     }
 
-    @GetMapping("/signin")
+    @GetMapping("/member/signin")
     public void signIn() {
         log.info("sign in");
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/member/signin")
     public String signInPOST(MemberDTO dto, RedirectAttributes rttr) {
         log.info("sign in : " + dto);
         service.signIn(dto);
         rttr.addFlashAttribute("result", dto.getUserId());
-        return "redirect:/main";
+        return "redirect:/login";
     }
 }
