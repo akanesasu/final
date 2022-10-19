@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%@include file="../header.jsp"%>
+<%@include file="../includes/header.jsp"%>
 
 <script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
 
@@ -66,7 +66,7 @@
         <p class="ad text-center">광고</p>
     </div>
 </div>
-<%@include file="../footer.jsp"%>
+<%@include file="../includes/footer.jsp"%>
 </div> <!-- END BODY -->
 
 <script>
