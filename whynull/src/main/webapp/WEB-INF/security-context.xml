@@ -5,25 +5,41 @@
        xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="whynullAccessDenied" class="org.whynull.security.whynullAccessDeniedHandler"></bean>
-    <bean id="whynullLoginSuccess" class="org.whynull.security.whynullLoginSuccessHandler"></bean>
+    <bean id="whynullAccessDenied" class="org.whynull.security.WhynullAccessDeniedHandler"></bean>
+<!--    <bean id="whynullLoginSuccess" class="org.whynull.security.WhynullLoginSuccessHandler"></bean>-->
+<!--    <bean id="whynullPasswordEncoder" class="org.whynull.security.WhynullNoOpPasswordEncoder"></bean>-->
     <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
-    <bean id="whynullUserDetailsService" class="org.whynull.security.whynullUserDetailsService"></bean>
+    <bean id="whynullUserDetailsService" class="org.whynull.security.WhynullUserDetailsService"></bean>
 
     <security:http>
-        <security:intercept-url pattern="/all" access="permitAll"/>
-        <security:intercept-url pattern="/member" access="hasRole('MEMBER')"/>
-        <security:intercept-url pattern="/admin" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/**" access="hasRole('MEMBER')"/>
+        <security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
         <security:access-denied-handler ref="whynullAccessDenied"/>
-        <security:form-login login-page="/login" authentication-success-handler-ref="whynullLoginSuccess"/>
+        <security:form-login login-page="/login" />
+<!--        <security:form-login login-page="/login" authentication-success-handler-ref="whynullLoginSuccess"/>-->
         <security:logout logout-url="/logout" invalidate-session="true"/>
-        <security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
-        <security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me, JSESSION_ID"/>
+<!--        <security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>-->
+<!--        <security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me, JSESSION_ID"/>-->
     </security:http>
 
     <security:authentication-manager>
-            <security:authentication-provider user-service-ref="whynullUserDetailsService">
-                <security:password-encoder ref="bcryptPasswordEncoder"/>
-            </security:authentication-provider>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="member" password="{noop}member" authorities="MEMBER"/>
+                <security:user name="admin" password="{noop}admin" authorities="MEMBER, ADMIN"/>
+            </security:user-service>
+        </security:authentication-provider>
+
+        <security:authentication-provider>
+<!--            <security:jdbc-user-service data-source-ref="dataSource"/>-->
+            <security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select userid, userpw, enabled from member where userid = ?"
+                                        authorities-by-username-query = "select userid, auth from member_auth where userid=?"/>
+<!--            <security:password-encoder ref="whynullNoOpPasswordEncoder"/>-->
+            <security:password-encoder ref="bcryptPasswordEncoder"/>
+        </security:authentication-provider>
+
+        <security:authentication-provider user-service-ref="whynullUserDetailsService">
+            <security:password-encoder ref="bcryptPasswordEncoder" />
+        </security:authentication-provider>
     </security:authentication-manager>
 </beans>

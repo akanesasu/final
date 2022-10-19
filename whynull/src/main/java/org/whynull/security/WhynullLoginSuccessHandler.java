@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
-public class whynullLoginSuccessHandler implements AuthenticationSuccessHandler {
+public class WhynullLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth) throws IOException, ServletException {
         log.warn("Login Success");
@@ -32,7 +32,6 @@ public class whynullLoginSuccessHandler implements AuthenticationSuccessHandler 
             return;
         }
 
-        response.sendRedirect("/whynull");
-
+        response.sendRedirect("/whynull/member/login");
     }
 }

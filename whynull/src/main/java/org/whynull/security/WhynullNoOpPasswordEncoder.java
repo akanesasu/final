@@ -4,7 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Log4j2
-public class whynullNoOpPasswordEncoder implements PasswordEncoder {
+public class WhynullNoOpPasswordEncoder implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence rawPassword) {

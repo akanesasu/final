@@ -20,10 +20,10 @@
             from member mem
             left outer join member_auth auth
                 on mem.userid = auth.userid
-            where mem.userid = #{userid}
+            where mem.userid = #{userId}
     </select>
 
-    <insert id="signin" parameterType="org.whynull.service.MemberServiceImpl">
+    <insert id="signIn" parameterType="org.whynull.service.MemberServiceImpl">
         insert into member (userid, userpw, username)
             values (#{userId}, #{userPw}, #{userName})
     </insert>
