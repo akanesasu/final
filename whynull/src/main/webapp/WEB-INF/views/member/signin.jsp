@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<% request.setCharacterEncoding("UTF-8"); %>
 
 <head>
     <meta charset="UTF-8">
@@ -35,7 +36,6 @@
         <div class="input-form col-md-12 mx-auto">
             <h4 class="mb-3">회원가입</h4>
             <form role="form" action="/whynull/member/signin" method="post">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-group mb-3">
                     <label for="username" class="mb-2">닉네임</label>
                     <input type="text" class="form-control" name="userName" id="username" placeholder="닉네임을 입력해주세요" required>
@@ -63,6 +63,7 @@
                     <button class="btn btn-primary btn-lg btn-block mx-2" type="submit">가입하기</button>
                     <button class="btn btn-secondary btn-lg btn-block mx-2">돌아가기</button>
                 </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
     </div>

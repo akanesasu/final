@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java"%>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,14 +61,13 @@
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
             <form class="p-4 p-md-5 border rounded-3 bg-light" action="/whynull/login" method="post">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" name="userId" id="floatingInput" placeholder="ID">
-                    <label for="floatingInput">아이디</label>
+                    <input type="text" class="form-control" name="username" id="userid" placeholder="ID">
+                    <label for="userid">아이디</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" name="userPw" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">비밀번호</label>
+                    <input type="password" class="form-control" name="password" id="userpw" placeholder="Password">
+                    <label for="userpw">비밀번호</label>
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox" value="remember-me"> REMEMBER ME</label>
@@ -78,6 +79,7 @@
                 <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
                 <hr class="my-4">
                 <div class="text-center"><small class="text-muted">회원으로 가입하면 이용약관에 동의하게 됩니다.</small></div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
     </div>

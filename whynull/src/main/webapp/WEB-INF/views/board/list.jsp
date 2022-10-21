@@ -70,7 +70,7 @@
                         <tr>
                             <td class="text-center"><c:out value="${board.post_num}"/></td>
                             <td class="text-center"><c:out value="${board.subject_content}"/></td>
-                            <td class="text-start px-2"><a class="read" href="/whynull/board/read?bdn=<c:out value='${board.boardNum}'/>&ptn=<c:out value='${board.post_num}'/>" style="text-decoration:none; color:black;"><c:out value="${board.post_title}"/></a></td>
+                            <td class="text-start px-2"><a class="read" href="/whynull/board/read?boardNum=<c:out value='${board.boardNum}'/>&postNum=<c:out value='${board.post_num}'/>" style="text-decoration:none; color:black;"><c:out value="${board.post_title}"/></a></td>
                             <td class="text-center"><c:out value="${board.mem_id}"/></td>
                             <td class="text-center"><fmt:formatDate pattern="MM/dd HH:mm" value="${board.writing_date}"/></td>
                             <td class="text-center"><c:out value="${board.post_view_count}"/></td>
