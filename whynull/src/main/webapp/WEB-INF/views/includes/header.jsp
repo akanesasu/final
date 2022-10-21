@@ -1,4 +1,5 @@
-<!-- HEADER -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,11 +39,11 @@
     </form>
     <div class="dropdown text-end">
       <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown">
-        <img src="https://cdn.pixabay.com/photo/2013/07/13/10/44/man-157699__480.png" width="36" height="36" class="rounded-circle">
+        <span sec:authentication="username"></span> 님
       </a>
       <ul class="dropdown-menu text-small">
         <li><a class="dropdown-item" href="/whynull/member/mypage">마이페이지</a></li>
-        <li><a class="dropdown-item" href="#">로그아웃</a></li>
+        <li><a class="dropdown-item" href="/whynull/logout">로그아웃</a></li>
       </ul>
     </div>
   </div>

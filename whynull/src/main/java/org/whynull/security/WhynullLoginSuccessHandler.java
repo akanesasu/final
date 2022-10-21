@@ -32,6 +32,6 @@ public class WhynullLoginSuccessHandler implements AuthenticationSuccessHandler 
             return;
         }
 
-        response.sendRedirect("/whynull/member/login");
+        response.sendRedirect("/whynull/login");
     }
 }

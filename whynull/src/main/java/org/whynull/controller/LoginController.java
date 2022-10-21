@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.whynull.domain.AuthDTO;
 import org.whynull.domain.MemberDTO;
 import org.whynull.service.MemberService;
 
@@ -54,9 +55,9 @@ public class LoginController {
     }
 
     @PostMapping("/member/signin")
-    public String signInPOST(MemberDTO dto, RedirectAttributes rttr) {
+    public String signInPOST(MemberDTO dto, AuthDTO authDTO, RedirectAttributes rttr) {
         log.info("sign in : " + dto);
-        service.signIn(dto);
+        service.signIn(dto, authDTO);
         rttr.addFlashAttribute("result", dto.getUserId());
         return "redirect:/login";
     }

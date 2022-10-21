@@ -17,14 +17,19 @@
 
     <select id="login" resultMap="memberMap">
         select mem.userid, userpw, username, enabled, regdate, auth
-            from member mem
-            left outer join member_auth auth
+            from users mem
+            left outer join authorities auth
                 on mem.userid = auth.userid
             where mem.userid = #{userId}
     </select>
 
     <insert id="signIn" parameterType="org.whynull.service.MemberServiceImpl">
-        insert into member (userid, userpw, username)
+        insert into users (userid, userpw, username)
             values (#{userId}, #{userPw}, #{userName})
+    </insert>
+
+    <insert id="signInAuth" parameterType="org.whynull.service.MemberServiceImpl">
+        insert into authorities (userid, auth)
+            values (#{userId}, 'MEMBER')
     </insert>
 </mapper>
