@@ -2,6 +2,7 @@ package org.whynull.domain;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.whynull.domain.criteria.Criteria;
 
 @Getter
 @ToString
