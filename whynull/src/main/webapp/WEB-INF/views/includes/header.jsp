@@ -22,30 +22,30 @@
 
 <div class="container">
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-  <a href="/whynull/main" class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none">
-    <h1 class="logo_alt display-6">WHY NULL</h1>
-  </a>
+    <a href="/whynull/main" class="d-flex align-items-center col-2 mb-2 mb-md-0 text-dark text-decoration-none">
+        <h1 class="logo_alt display-6">WHY NULL</h1>
+    </a>
 
-  <ul class="nav col-md-5 mb-2 justify-content-center mb-md-0 fs-5">
-    <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=1&pageNum=1" role="button">자유</a></li>
-    <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=2&pageNum=1" role="button">정보</a></li>
-    <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=3&pageNum=1" role="button">홍보</a></li>
-    <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=4&pageNum=1" role="button">코드질답</a></li>
-  </ul>
+    <ul class="nav col-6 mb-2 justify-content-center mb-md-0 fs-5">
+        <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=1&pageNum=1" role="button">자유</a></li>
+        <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=2&pageNum=1" role="button">정보</a></li>
+        <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=3&pageNum=1" role="button">홍보</a></li>
+        <li><a class="nav-link px-4 link-dark" href="/whynull/board/list?boardNum=4&pageNum=1" role="button">코드질답</a></li>
+    </ul>
 
-  <div class="row row-cols-lg-auto g-0">
-    <form class="mb-3 mb-lg-0 me-lg-3">
-      <input type="search" class="form-control" placeholder="검색하기">
-    </form>
-    <div class="dropdown text-end">
-      <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown">
-        <span sec:authentication="username"></span> 님
-      </a>
-      <ul class="dropdown-menu text-small">
-        <li><a class="dropdown-item" href="/whynull/member/mypage">마이페이지</a></li>
-        <li><a class="dropdown-item" href="/whynull/logout">로그아웃</a></li>
-      </ul>
+    <div class="row col-4" style="flex-wrap: nowrap; align-items: center;">
+        <form class="input-group my-0 mx-4 p-0" action="/whynull/board/allResult" method="get" style="width:250px;">
+            <input type="text" class="form-control" placeholder="통합검색"><span><button class="input-group-text btn btn-dark">검색</button></span>
+        </form>
+        <div class="dropdown text-end d-flex">
+            <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown">
+                <span class="fw-bold"><sec:authentication property="principal.username"/>${username}</span> 님
+            </a>
+            <ul class="dropdown-menu text-small">
+                <li><a class="dropdown-item" href="/whynull/member/mypage">마이페이지</a></li>
+                <li><a class="dropdown-item" href="/whynull/logout">로그아웃</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </header>
 </div>

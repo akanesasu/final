@@ -23,18 +23,48 @@
                 </c:choose>
             </h2>
             <div class="form-group mt-4 mb-2">
-                <div class="form-check form-check-inline">
-                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio1" value="일반">
-                   <label class="form-check-label" for="inlineRadio1">일반</label>
-                </div>
-                <div class="form-check form-check-inline">
-                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio2" value="질문">
-                   <label class="form-check-label" for="inlineRadio2">질문</label>
-                </div>
-                <div class="form-check form-check-inline">
-                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio3" value="IT">
-                   <label class="form-check-label" for="inlineRadio3">IT</label>
-                </div>
+                <c:choose>
+                    <c:when test="${param.boardNum == '1'}">
+                        <c:forEach items="${headList}" var="outer" varStatus="status">
+                            <c:forEach items="${outer}" var="inner">
+                                <div class="form-check form-check-inline">
+                                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio1" value="${inner}">
+                                   <label class="form-check-label" for="inlineRadio1">${inner}</label>
+                                </div>
+                            </c:forEach>
+                        </c:forEach>
+                    </c:when>
+                    <c:when test="${param.boardNum == '2'}">
+                        <c:forEach items="${headList}" var="outer" varStatus="status">
+                            <c:forEach items="${outer}" var="inner">
+                                <div class="form-check form-check-inline">
+                                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio2" value="${inner}">
+                                   <label class="form-check-label" for="inlineRadio2">${inner}</label>
+                                </div>
+                            </c:forEach>
+                        </c:forEach>
+                    </c:when>
+                    <c:when test="${param.boardNum == '3'}">
+                        <c:forEach items="${headList}" var="outer" varStatus="status">
+                            <c:forEach items="${outer}" var="inner">
+                                <div class="form-check form-check-inline">
+                                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio3" value="${inner}">
+                                   <label class="form-check-label" for="inlineRadio3">${inner}</label>
+                                </div>
+                            </c:forEach>
+                        </c:forEach>
+                    </c:when>
+                    <c:when test="${param.boardNum == '4'}">
+                        <c:forEach items="${headList}" var="outer" varStatus="status">
+                            <c:forEach items="${outer}" var="inner">
+                                <div class="form-check form-check-inline">
+                                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio4" value="${inner}">
+                                   <label class="form-check-label" for="inlineRadio4">${inner}</label>
+                                </div>
+                            </c:forEach>
+                        </c:forEach>
+                    </c:when>
+                </c:choose>
             </div>
             <div class="form-group d-flex my-2" style="align-items: center;">
                 <label class="label fw-bold" for="title" style="margin: 0 10px 0 0;">제목</label>
@@ -44,6 +74,7 @@
                 <label class="label fw-bold" for="title" style="margin: 0 10px 0 0;">작성자</label>
                 <input type="text" name="mem_id" class="form-control w-75" id="mem_id" required>
             </div>
+            <input type="hidden" name="board_num" id="boardNum" value="${param.boardNum}">
             <input type="hidden" name="boardNum" id="boardNum" value="${param.boardNum}">
             <textarea rows="1" cols="1" id="post_content" name="post_content"></textarea>
             <script>
@@ -60,6 +91,7 @@
             <div class="text-end">
                 <button type="submit" class="btn btn-secondary mb-3">작성</button>
             </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
     </div>
     <div class="col-2">

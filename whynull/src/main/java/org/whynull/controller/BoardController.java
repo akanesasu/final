@@ -8,12 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.whynull.domain.BoardDTO;
-import org.whynull.domain.Criteria;
+import org.whynull.domain.criteria.Criteria;
 import org.whynull.domain.WriteDTO;
 import org.whynull.domain.PageDTO;
+import org.whynull.domain.criteria.HeadListCriteria;
 import org.whynull.service.BoardService;
 
 import java.util.List;
@@ -35,7 +35,8 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public void write() {
+    public void write(HeadListCriteria cri, Model model) {
+        model.addAttribute("headList", service.getWriteHeadList(cri));
     }
 
     @PostMapping("/write")
@@ -47,21 +48,21 @@ public class BoardController {
     }
 
     @GetMapping("/read")
-    public void read(@RequestParam("boardNum") Long boardNum, @RequestParam("postNum") Long post_num, Model model) {
+    public void read(@RequestParam("boardNum") Long board_num, @RequestParam("postNum") Long post_num, Model model) {
         log.info("/read");
-        service.viewCount(post_num);
-        model.addAttribute("read", service.read(boardNum, post_num));
+        service.viewCount(board_num, post_num);
+        model.addAttribute("read", service.read(board_num, post_num));
     }
 
     @GetMapping("/edit")
-    public void edit(@RequestParam("boardNum") Long boardNum, @RequestParam("postNum") Long post_num, Model model) {
+    public void edit(@RequestParam("boardNum") Long board_num, @RequestParam("postNum") Long post_num, Model model) {
         log.info("/edit");
-        model.addAttribute("board", service.read(boardNum, post_num));
+        model.addAttribute("board", service.read(board_num, post_num));
     }
 
     @GetMapping(value="/getContentList", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<WriteDTO>> getContentList(Long boardNum, Long post_num) {
+    public ResponseEntity<List<WriteDTO>> getContentList(Long board_num, Long post_num) {
         log.info("getContentList : " + post_num);
-        return new ResponseEntity<>(service.getContentList(boardNum, post_num), HttpStatus.OK);
+        return new ResponseEntity<>(service.getContentList(board_num, post_num), HttpStatus.OK);
     }
 }

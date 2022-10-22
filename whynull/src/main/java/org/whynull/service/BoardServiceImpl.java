@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.whynull.domain.BoardDTO;
-import org.whynull.domain.Criteria;
+import org.whynull.domain.criteria.Criteria;
+import org.whynull.domain.criteria.HeadListCriteria;
+import org.whynull.domain.criteria.MainCriteria;
 import org.whynull.domain.WriteDTO;
 import org.whynull.mapper.BoardMapper;
 import org.whynull.mapper.WriteMapper;
@@ -39,6 +40,26 @@ public class BoardServiceImpl implements BoardService {
         log.info("Get board list // Criteria : " + cri);
         return mapper.getList(cri);
     }
+    @Override
+    public List<BoardDTO> getMainList1(MainCriteria cri) {
+        log.info("Get Main board list 1 // Criteria : " + cri);
+        return mapper.getMainList1(cri);
+    }
+    @Override
+    public List<BoardDTO> getMainList2(MainCriteria cri) {
+        log.info("Get Main board list 2 // Criteria : " + cri);
+        return mapper.getMainList2(cri);
+    }
+    @Override
+    public List<BoardDTO> getMainList3(MainCriteria cri) {
+        log.info("Get Main board list 3 // Criteria : " + cri);
+        return mapper.getMainList3(cri);
+    }
+    @Override
+    public List<BoardDTO> getMainList4(MainCriteria cri) {
+        log.info("Get Main board list 4 // Criteria : " + cri);
+        return mapper.getMainList4(cri);
+    }
 
     @Override
     public int getTotal(Criteria cri) {
@@ -52,12 +73,31 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void viewCount(Long post_num) {
-        mapper.viewCount(post_num);
+    public void viewCount(Long boardNum, Long post_num) {
+        mapper.viewCount(boardNum, post_num);
     }
 
     @Override
     public List<String> getHeadList(Criteria cri) {
+        if(cri.getBoardNum() == 1) {
+            cri.insertHeadFree();
+            return cri.getHeadFree();
+        } else if(cri.getBoardNum() == 2) {
+            cri.insertHeadInfo();
+            return cri.getHeadInfo();
+        } else if(cri.getBoardNum() == 3) {
+            cri.insertHeadPr();
+            return cri.getHeadPr();
+        } else if(cri.getBoardNum() == 4) {
+            cri.insertHeadCode();
+            return cri.getHeadCode();
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<String> getWriteHeadList(HeadListCriteria cri) {
         if(cri.getBoardNum() == 1) {
             cri.insertHeadFree();
             return cri.getHeadFree();
