@@ -1,4 +1,4 @@
-package org.whynull.domain;
+package org.whynull.domain.criteria;
 
 import lombok.Getter;
 import lombok.Setter;

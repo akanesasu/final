@@ -13,8 +13,8 @@
     <security:http>
         <security:intercept-url pattern="/login" access="permitAll"/>
         <security:intercept-url pattern="/error" access="permitAll"/>
-        <security:intercept-url pattern="/member/*" access="permitAll"/>
-        <security:intercept-url pattern="/board/*" access="hasAuthority('MEMBER')"/>
+        <security:intercept-url pattern="/member/**" access="permitAll"/>
+        <security:intercept-url pattern="/board/**" access="hasAuthority('MEMBER')"/>
         <security:intercept-url pattern="/main" access="hasAuthority('MEMBER')"/>
         <security:intercept-url pattern="/admin" access="hasAuthority('ADMIN')"/>
         <security:access-denied-handler ref="whynullAccessDenied"/>
