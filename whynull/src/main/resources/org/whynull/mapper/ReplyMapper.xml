@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.whynull.mapper.ReplyMapper">
+    <sql id="board_choose">
+        <choose>
+            <when test="boardNum == '1'.toString()">reply_free</when>
+            <when test="boardNum == '2'.toString()">reply_info</when>
+            <when test="boardNum == '3'.toString()">reply_pr</when>
+            <when test="boardNum == '4'.toString()">reply_code</when>
+        </choose>
+    </sql>
+
+    <select id="getList" resultType="org.whynull.domain.ReplyDTO">
+        select reply_num, board_num, reply, replyer, replyDate
+            from <include refid="board_choose"></include>
+            where board_num = #{boardNum}
+            order by reply_num asc
+    </select>
+</mapper>
