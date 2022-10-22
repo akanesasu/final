@@ -6,124 +6,103 @@
 
 <body>
 <div class="container">
-    <div class="row">
-      <!-- 게시판 -->
-      <div class="col-lg-10" style="border: solid 4px black">
-        <!-- 카드1열 -->
-        <!-- 카드1 -->
+<div class="row">
+    <div class="col-10">
+        <div class="row" style="justify-content: center;">
+            <div class="row col-6">
+                <div class="board my-2 p-3">
+                    <p><h4 class="text-center fw-bold">자유게시판</h4></p>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width:80%" class="text-center">제목</th>
+                            <th style="width:20%" class="text-center">작성시간</th>
+                        </tr>
+                        </thead>
 
-        <div class="row">
-          <div class="row col-sm-6" style="margin-right: 36px">
-            <div class="card text-center">
-              <div class="card-header">Featured</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-              </ul>
+                        <c:forEach items="${list1}" var="board">
+                            <tr>
+                                <td class="text-start px-2"><a class="read" href="/whynull/board/read?boardNum=1&postNum=<c:out value='${board.post_num}'/>" style="text-decoration:none; color:black;"><c:out value="${board.post_title}"/></a></td>
+                                <td class="text-center"><fmt:formatDate pattern="HH:mm" value="${board.writing_date}"/></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
             </div>
-          </div>
 
-          <!-- 카드2 -->
-          <div class="row col-sm-6">
-            <div class="card text-center">
-              <div class="card-header">Featured</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
+            <div class="row col-6">
+                <div class="board my-2 p-3">
+                    <p><h4 class="text-center fw-bold">정보게시판</h4></p>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width:80%" class="text-center">제목</th>
+                            <th style="width:20%" class="text-center">작성시간</th>
+                        </tr>
+                        </thead>
 
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-              </ul>
+                        <c:forEach items="${list2}" var="board">
+                            <tr>
+                                <td class="text-start px-2"><a class="read" href="/whynull/board/read?boardNum=2&postNum=<c:out value='${board.post_num}'/>" style="text-decoration:none; color:black;"><c:out value="${board.post_title}"/></a></td>
+                                <td class="text-center"><fmt:formatDate pattern="HH:mm" value="${board.writing_date}"/></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
             </div>
-          </div>
         </div>
 
-        <p></p>
+        <div class="row" style="justify-content: center;">
+            <div class="row col-6">
+                <div class="board my-2 p-3">
+                    <p><h4 class="text-center fw-bold">홍보게시판</h4></p>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width:80%" class="text-center">제목</th>
+                            <th style="width:20%" class="text-center">작성시간</th>
+                        </tr>
+                        </thead>
 
-        <!-- 게시판 2열 -->
-
-        <!-- 카드1 -->
-        <div class="row">
-          <div class="row col-sm-6" style="margin-right: 36px">
-            <div class="card text-center">
-              <div class="card-header">Featured</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-              </ul>
+                        <c:forEach items="${list3}" var="board">
+                            <tr>
+                                <td class="text-start px-2"><a class="read" href="/whynull/board/read?boardNum=3&postNum=<c:out value='${board.post_num}'/>" style="text-decoration:none; color:black;"><c:out value="${board.post_title}"/></a></td>
+                                <td class="text-center"><fmt:formatDate pattern="HH:mm" value="${board.writing_date}"/></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
             </div>
-          </div>
 
-          <!-- 카드2 -->
-          <div class="row col-sm-6">
-            <div class="card text-center">
-              <div class="card-header">Featured</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
+            <div class="row col-6">
+                <div class="board my-2 p-3">
+                    <p><h4 class="text-center fw-bold">코드질답게시판</h4></p>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width:80%" class="text-center">제목</th>
+                            <th style="width:20%" class="text-center">작성시간</th>
+                        </tr>
+                        </thead>
 
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-              </ul>
+                        <c:forEach items="${list4}" var="board">
+                            <tr>
+                                <td class="text-start px-2"><a class="read" href="/whynull/board/read?boardNum=4&postNum=<c:out value='${board.post_num}'/>" style="text-decoration:none; color:black;"><c:out value="${board.post_title}"/></a></td>
+                                <td class="text-center"><fmt:formatDate pattern="HH:mm" value="${board.writing_date}"/></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
             </div>
-          </div>
         </div>
-
-        <p></p>
-
-        <!-- 카드 3열 -->
-
-        <!-- 카드1 -->
-        <div class="row">
-          <div class="row col-sm-6" style="margin-right: 36px">
-            <div class="card text-center">
-              <div class="card-header">Featured</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- 카드2 -->
-          <div class="row col-sm-6">
-            <div class="card text-center">
-              <div class="card-header">Featured</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 게시판끝 -->
-
-      <div class="col-lg-2" style="border: solid 4px black">
-        <p style="height: 800px; width: 150px; border: solid 2px red">배너</p>
-      </div>
     </div>
 
-    <%@include file="./includes/footer.jsp"%>
-  </div>
+    <div class="col-lg-2">
+        <p>배너</p>
+    </div>
+</div>
+
+<%@include file="./includes/footer.jsp"%>
+</div>
 </body>
 </html>
