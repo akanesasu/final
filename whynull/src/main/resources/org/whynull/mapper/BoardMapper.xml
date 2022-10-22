@@ -5,67 +5,61 @@
 <mapper namespace="org.whynull.mapper.BoardMapper">
     <sql id="subject_head">
         <trim prefix=" subject_content =" suffix=" and" prefixOverrides="OR">
-            <foreach collection="boardNumArr" item='boardNum'>
-                <choose>
-                    <when test="boardNum == '1'.toString()">
-                        <choose>
-                            <when test="head == '0'.toString()">'전체'</when>
-                            <when test="head == '1'.toString()">'일반'</when>
-                            <when test="head == '2'.toString()">'질문'</when>
-                            <when test="head == '3'.toString()">'IT'</when>
-                        </choose>
-                    </when>
-                    <when test="boardNum == '2'.toString()">
-                        <choose>
-                            <when test="head == '0'.toString()">'전체'</when>
-                            <when test="head == '1'.toString()">'소식통'</when>
-                            <when test="head == '2'.toString()">'팁'</when>
-                            <when test="head == '3'.toString()">'리뷰/후기'</when>
-                        </choose>
-                    </when>
-                    <when test="boardNum == '3'.toString()">
-                        <choose>
-                            <when test="head == '0'.toString()">'전체'</when>
-                            <when test="head == '1'.toString()">'스터디'</when>
-                            <when test="head == '2'.toString()">'프로젝트'</when>
-                            <when test="head == '3'.toString()">'기타'</when>
-                        </choose>
-                    </when>
-                    <when test="boardNum == '4'.toString()">
-                        <choose>
-                            <when test="head == '0'.toString()">'전체'</when>
-                            <when test="head == '1'.toString()">'백엔드'</when>
-                            <when test="head == '2'.toString()">'프론트엔드'</when>
-                            <when test="head == '3'.toString()">'기타'</when>
-                        </choose>
-                    </when>
-                </choose>
-            </foreach>
+            <choose>
+                <when test="boardNum == '1'.toString()">
+                    <choose>
+                        <when test="head == '0'.toString()">'전체'</when>
+                        <when test="head == '1'.toString()">'일반'</when>
+                        <when test="head == '2'.toString()">'질문'</when>
+                        <when test="head == '3'.toString()">'IT'</when>
+                    </choose>
+                </when>
+                <when test="boardNum == '2'.toString()">
+                    <choose>
+                        <when test="head == '0'.toString()">'전체'</when>
+                        <when test="head == '1'.toString()">'소식통'</when>
+                        <when test="head == '2'.toString()">'팁'</when>
+                        <when test="head == '3'.toString()">'리뷰/후기'</when>
+                    </choose>
+                </when>
+                <when test="boardNum == '3'.toString()">
+                    <choose>
+                        <when test="head == '0'.toString()">'전체'</when>
+                        <when test="head == '1'.toString()">'스터디'</when>
+                        <when test="head == '2'.toString()">'프로젝트'</when>
+                        <when test="head == '3'.toString()">'기타'</when>
+                    </choose>
+                </when>
+                <when test="boardNum == '4'.toString()">
+                    <choose>
+                        <when test="head == '0'.toString()">'전체'</when>
+                        <when test="head == '1'.toString()">'백엔드'</when>
+                        <when test="head == '2'.toString()">'프론트엔드'</when>
+                        <when test="head == '3'.toString()">'기타'</when>
+                    </choose>
+                </when>
+            </choose>
         </trim>
     </sql>
 
     <sql id="boardNum">
         <trim prefix="board_num = " suffix=" and" prefixOverrides="OR">
-            <foreach collection="boardNumArr" item='boardNum'>
-                <choose>
-                    <when test="boardNum == '1'.toString()">1</when>
-                    <when test="boardNum == '2'.toString()">2</when>
-                    <when test="boardNum == '3'.toString()">3</when>
-                    <when test="boardNum == '4'.toString()">4</when>
-                </choose>
-            </foreach>
+            <choose>
+                <when test="boardNum == '1'.toString()">1</when>
+                <when test="boardNum == '2'.toString()">2</when>
+                <when test="boardNum == '3'.toString()">3</when>
+                <when test="boardNum == '4'.toString()">4</when>
+            </choose>
         </trim>
     </sql>
 
     <sql id="board_choose">
-        <foreach collection="boardNumArr" item='boardNum'>
-            <choose>
-                <when test="boardNum == '1'.toString()">board_free</when>
-                <when test="boardNum == '2'.toString()">board_info</when>
-                <when test="boardNum == '3'.toString()">board_pr</when>
-                <when test="boardNum == '4'.toString()">board_code</when>
-            </choose>
-        </foreach>
+        <choose>
+            <when test="boardNum == '1'.toString()">board_free</when>
+            <when test="boardNum == '2'.toString()">board_info</when>
+            <when test="boardNum == '3'.toString()">board_pr</when>
+            <when test="boardNum == '4'.toString()">board_code</when>
+        </choose>
     </sql>
     
     <select id="getList" resultType="org.whynull.domain.BoardDTO">
@@ -87,9 +81,69 @@
         ]]>
     </select>
 
+    <select id="getMainList1" resultType="org.whynull.domain.BoardDTO">
+        with board_temp as (
+            select row_number() over (order by post_num desc) as rn, post_num, board_num, writing_date, post_title
+                from board_free use index(primary)
+        )
+
+        select post_num, board_num, writing_date, post_title
+            from board_temp
+            where
+
+            <![CDATA[
+                    (rn <= 5 and rn > 0)
+            ]]>
+    </select>
+
+    <select id="getMainList2" resultType="org.whynull.domain.BoardDTO">
+        with board_temp as (
+            select row_number() over (order by post_num desc) as rn, post_num, board_num, writing_date, post_title
+                from board_info use index(primary)
+        )
+
+        select post_num, board_num, writing_date, post_title
+            from board_temp
+            where
+
+            <![CDATA[
+                    (rn <= 5 and rn > 0)
+            ]]>
+    </select>
+
+    <select id="getMainList3" resultType="org.whynull.domain.BoardDTO">
+        with board_temp as (
+            select row_number() over (order by post_num desc) as rn, post_num, board_num, writing_date, post_title
+                from board_pr use index(primary)
+        )
+
+        select post_num, board_num, writing_date, post_title
+            from board_temp
+            where
+
+            <![CDATA[
+                    (rn <= 5 and rn > 0)
+            ]]>
+    </select>
+
+    <select id="getMainList4" resultType="org.whynull.domain.BoardDTO">
+        with board_temp as (
+            select row_number() over (order by post_num desc) as rn, post_num, board_num, writing_date, post_title
+                from board_code use index(primary)
+        )
+
+        select post_num, board_num, writing_date, post_title
+            from board_temp
+            where
+
+            <![CDATA[
+                    (rn <= 5 and rn > 0)
+            ]]>
+    </select>
+
     <insert id="write" parameterType="org.whynull.service.BoardServiceImpl" useGeneratedKeys="true" keyProperty="post_num" keyColumn="post_num">
         insert into <include refid="board_choose"></include> (board_num, subject_content, writing_date, mem_id, post_title, post_content)
-            values (#{boardNum}, #{subject_content}, now(), #{mem_id}, #{post_title}, #{post_content})
+            values (#{board_num}, #{subject_content}, now(), #{mem_id}, #{post_title}, #{post_content})
     </insert>
 
     <select id="read" resultType="org.whynull.domain.BoardDTO">

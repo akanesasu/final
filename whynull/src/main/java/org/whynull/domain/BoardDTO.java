@@ -14,6 +14,7 @@ import java.util.List;
 public class BoardDTO {
     private Long post_num;
     private Long boardNum;
+    private Long board_num = boardNum;
     private String subject_content;
     private Date writing_date;
     private String mem_id;
