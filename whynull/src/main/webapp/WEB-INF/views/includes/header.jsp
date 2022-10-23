@@ -18,6 +18,73 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&family=Yeon+Sung&display=swap" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- TEMP CSS -->
+    <style>
+        * {
+            font-family: "Noto Serif KR", serif;
+        }
+        /** Hyperlink general styles **/
+        .hrs {
+            text-decoration:none;
+            color:black;
+        }
+        /** a box to replace an ad */
+        .ad {
+            border: 1px solid black;
+            height: 800px;
+        }
+        .body {
+            height: 800px;
+        }
+        /** the title to replace an logo */
+        .logo_alt {
+            font-family: "Yeon Sung", cursive;
+        }
+        .ck-editor__editable {
+            min-height: 580px;
+            max-height: 580px;
+        }
+        .sep:before {
+            content: "|";
+            font-size: 1rem;
+            margin: 0.1rem;
+        }
+        /** Board */
+        .board {
+            min-height: 400px;
+            max-height: 400px;
+        }
+        .read {
+                min-height: 500px;
+                max-height: 500px;
+        }
+        /** Pagination */
+        .page-link {
+            color: #999;
+            border-color: #444;
+        }
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #ccc;
+            font-weight: bold;
+            background-color: #333;
+            border-color: #444;
+        }
+        .page-link:focus,
+        .page-link:hover {
+            color: #ccc;
+            background-color: #222;
+            border-color: #444;
+        }
+        textarea {
+            width: 100%;
+            height: 6em;
+            border: none;
+            resize: none;
+            overflow: auto;
+          }
+    </style>
 </head>
 
 <div class="container">
