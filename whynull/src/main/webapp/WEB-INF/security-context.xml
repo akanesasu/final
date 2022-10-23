@@ -10,11 +10,12 @@
     <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
     <bean id="whynullUserDetailsService" class="org.whynull.security.WhynullUserDetailsService"></bean>
 
-    <security:http>
+    <security:http use-expressions="true">
         <security:intercept-url pattern="/login" access="permitAll"/>
         <security:intercept-url pattern="/error" access="permitAll"/>
         <security:intercept-url pattern="/member/**" access="permitAll"/>
         <security:intercept-url pattern="/board/**" access="hasAuthority('MEMBER')"/>
+        <security:intercept-url pattern="/reply/**" access="permitAll"/>
         <security:intercept-url pattern="/main" access="hasAuthority('MEMBER')"/>
         <security:intercept-url pattern="/admin" access="hasAuthority('ADMIN')"/>
         <security:access-denied-handler ref="whynullAccessDenied"/>
@@ -22,6 +23,7 @@
         <security:logout logout-url="/logout" invalidate-session="true"/>
 <!--        <security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>-->
 <!--        <security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me, JSESSION_ID"/>-->
+        <security:csrf disabled="true" />
     </security:http>
 
     <security:authentication-manager>
