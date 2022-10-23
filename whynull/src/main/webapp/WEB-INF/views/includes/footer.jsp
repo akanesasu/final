@@ -1,13 +1,15 @@
 <!-- FOOTER -->
-
+<div class="container">
 <footer class="py-3 my-4">
-    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+    <ul class="nav justify-content-center pb-3 mb-3">
       <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">이용규칙</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">개인정보처리방식</a></li>
       <li class="nav-item"><a href="" class="nav-link px-2 text-muted" data-bs-toggle="modal" data-bs-target="#staticBackdropLive">문의하기</a></li>
     </ul>
+    <hr/>
     <p class="text-center text-muted">&copy; WHY NULL</p>
 </footer>
+</div>
 
 
 
