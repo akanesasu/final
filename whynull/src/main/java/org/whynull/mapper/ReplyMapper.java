@@ -2,18 +2,18 @@ package org.whynull.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.whynull.domain.ReplyDTO;
-import org.whynull.domain.criteria.Criteria;
+import org.whynull.domain.criteria.ReplyCriteria;
 
 import java.util.List;
 
 public interface ReplyMapper {
     int insert(ReplyDTO dto);
 
-    ReplyDTO read(Long boardNum);
+    ReplyDTO read(ReplyDTO dto);
 
-    int delete(Long boardNum);
+    int delete(ReplyDTO dto);
 
-    int update(ReplyDTO dto);
+    int modify(ReplyDTO dto);
 
-    List<ReplyDTO> getList(@Param("cri") Criteria cri, @Param("boardNum") Long boardNum);
+    List<ReplyDTO> getList(@Param("cri") ReplyCriteria cri, @Param("dto") ReplyDTO dto);
 }

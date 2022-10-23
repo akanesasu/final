@@ -1,18 +1,18 @@
 package org.whynull.service;
 
 import org.whynull.domain.ReplyDTO;
-import org.whynull.domain.criteria.Criteria;
+import org.whynull.domain.criteria.ReplyCriteria;
 
 import java.util.List;
 
 public interface ReplyService {
     int write(ReplyDTO dto);
 
-    ReplyDTO get(Long replyNum);
+    ReplyDTO get(ReplyDTO dto);
 
     int modify(ReplyDTO dto);
 
-    int remove(Long replyNum);
+    int remove(ReplyDTO dto);
 
-    List<ReplyDTO> getList(Criteria cri, Long postNum);
+    List<ReplyDTO> getList(ReplyCriteria cri, ReplyDTO dto);
 }

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.whynull.domain.ReplyDTO;
-import org.whynull.domain.criteria.Criteria;
+import org.whynull.domain.criteria.ReplyCriteria;
 import org.whynull.mapper.ReplyMapper;
 
 import java.util.List;
@@ -17,31 +17,31 @@ public class ReplyServiceImpl implements ReplyService{
 
     @Override
     public int write(ReplyDTO dto) {
-        log.info("Modify Reply  : " + dto + " ====================== ");
+        log.info("Write Reply  : " + dto + " ====================== ");
         return mapper.insert(dto);
     }
 
     @Override
-    public ReplyDTO get(Long replyNum) {
-        log.info("Get Reply  : " + replyNum + " ====================== ");
-        return mapper.read(replyNum);
+    public ReplyDTO get(ReplyDTO dto) {
+        log.info("Get Reply  : " + dto.getReplyNum() + " ====================== ");
+        return mapper.read(dto);
     }
 
     @Override
     public int modify(ReplyDTO dto) {
         log.info("Modify Reply  : " + dto + " ====================== ");
-        return mapper.update(dto);
+        return mapper.modify(dto);
     }
 
     @Override
-    public int remove(Long replyNum) {
-        log.info("Remove Reply  : " + replyNum + " ====================== ");
-        return mapper.delete(replyNum);
+    public int remove(ReplyDTO dto) {
+        log.info("Remove Reply  : " + dto.getReplyNum() + " ====================== ");
+        return mapper.delete(dto);
     }
 
     @Override
-    public List<ReplyDTO> getList(Criteria cri, Long postNum) {
-        log.info("List of Reply  : " + postNum + " ====================== ");
-        return mapper.getList(cri, postNum);
+    public List<ReplyDTO> getList(ReplyCriteria cri, ReplyDTO dto) {
+        log.info("List of Reply  : " + dto.getPostNum() + " ====================== ");
+        return mapper.getList(cri, dto);
     }
 }

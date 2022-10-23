@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @ToString
 public class Criteria {
-    private int rn;
+//    private int rn;
     private int pageNum;
     private int amount;
     private Long boardNum;
