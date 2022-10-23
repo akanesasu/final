@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <%@include file="../includes/header.jsp"%>
 
@@ -14,7 +15,7 @@
 <div class="row">
     <div class="col-lg-10">
         <form role="form" action="/whynull/board/write" method="post">
-            <h2 class="display-6 fw-bold" name="subject_content">
+            <h2 class="display-6 fw-bold">
                 <c:choose>
                     <c:when test="${param.boardNum eq '1'}">자유게시판</c:when>
                     <c:when test="${param.boardNum eq '2'}">정보게시판</c:when>
@@ -71,8 +72,7 @@
                 <input type="text" name="post_title" class="form-control w-75" id="post_title" required>
             </div>
             <div class="form-group d-flex my-2" style="align-items: center;">
-                <label class="label fw-bold" for="title" style="margin: 0 10px 0 0;">작성자</label>
-                <input type="text" name="mem_id" class="form-control w-75" id="mem_id" required>
+                <input type="hidden" name="mem_id" class="form-control w-75" id="mem_id" value="<sec:authentication property='principal.username'/>" required>
             </div>
             <input type="hidden" name="board_num" id="boardNum" value="${param.boardNum}">
             <input type="hidden" name="boardNum" id="boardNum" value="${param.boardNum}">

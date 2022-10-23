@@ -3,6 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.whynull.mapper.ReplyMapper">
+    <resultMap id="replyList" type="org.whynull.domain.ReplyDTO">
+        <id property="replyNum" column="reply_num"/>
+        <result property="postNum" column="post_num"/>
+        <result property="reply" column="reply"/>
+        <result property="replyer" column="replyer"/>
+        <result property="replyDate" column="reply_date" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+    </resultMap>
+
+    <sql id="board_choose_dto">
+        <choose>
+            <when test="dto.boardNum == '1'.toString()">reply_free</when>
+            <when test="dto.boardNum == '2'.toString()">reply_info</when>
+            <when test="dto.boardNum == '3'.toString()">reply_pr</when>
+            <when test="dto.boardNum == '4'.toString()">reply_code</when>
+        </choose>
+    </sql>
+
     <sql id="board_choose">
         <choose>
             <when test="boardNum == '1'.toString()">reply_free</when>
@@ -12,10 +29,27 @@
         </choose>
     </sql>
 
-    <select id="getList" resultType="org.whynull.domain.ReplyDTO">
-        select reply_num, board_num, reply, replyer, replyDate
-            from <include refid="board_choose"></include>
-            where board_num = #{boardNum}
+    <select id="getList" resultType="org.whynull.domain.ReplyDTO" resultMap="replyList">
+        select reply_num, post_num, reply, replyer, reply_date
+            from <include refid="board_choose_dto"></include>
+            where post_num = #{dto.postNum}
             order by reply_num asc
     </select>
+
+    <insert id="insert" parameterType="org.whynull.service.ReplyServiceImpl" useGeneratedKeys="true" keyProperty="replyNum" keyColumn="reply_num">
+        insert into <include refid="board_choose"></include> (post_num, reply, replyer)
+            values (#{postNum}, #{reply}, #{replyer})
+    </insert>
+
+    <select id="read" resultType="org.whynull.domain.ReplyDTO">
+        select * from <include refid="board_choose"></include> where reply_num = #{replyNum} and post_num = #{postNum}
+    </select>
+
+    <delete id="delete" parameterType="org.whynull.domain.ReplyDTO">
+        delete from <include refid="board_choose"></include> where reply_num = #{replyNum} and post_num = #{postNum}
+    </delete>
+
+    <update id="modify" parameterType="org.whynull.domain.ReplyDTO">
+        update <include refid="board_choose"></include> set reply = #{reply}, reply_date = now() where reply_num = #{replyNum} and post_num = #{postNum}
+    </update>
 </mapper>

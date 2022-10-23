@@ -10,11 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.whynull.domain.BoardDTO;
+import org.whynull.domain.ReplyDTO;
 import org.whynull.domain.criteria.Criteria;
 import org.whynull.domain.WriteDTO;
 import org.whynull.domain.PageDTO;
 import org.whynull.domain.criteria.HeadListCriteria;
+import org.whynull.domain.criteria.ReplyCriteria;
 import org.whynull.service.BoardService;
+import org.whynull.service.ReplyService;
 
 import java.util.List;
 

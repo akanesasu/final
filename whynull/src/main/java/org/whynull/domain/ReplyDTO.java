@@ -10,6 +10,7 @@ import java.util.Date;
 public class ReplyDTO {
     private Long replyNum;
     private Long postNum;
+    private Long boardNum;
 
     private String reply;
     private String replyer;

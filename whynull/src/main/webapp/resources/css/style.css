@@ -25,37 +25,11 @@
   margin: 0.5em;
   line-height: 0.2em;
 }
-
-/** Comment */
-.comment_wrapper > .comment_wrapper {
-  margin-left: 2rem;
-  margin-right: 0;
-  margin-top: 1rem;
-}
-.comment_item {
-  border: 2px solid #b9b9b9;
-}
-.comment_info {
-  background-color: #b9b9b9;
-  padding: 0 0.5rem;
-}
-.comment_text {
-  padding: 0 0.5rem;
-}
-.comment_choosed {
-  border: 2px solid red;
-}
-
 /** Board */
 .board {
   min-height: 400px;
   max-height: 400px;
 }
-.input-group-prepend,
-.input-group-append {
-  display: flex;
-}
-
 /** Pagination */
 .page-link {
   color: #999;
@@ -73,24 +47,4 @@
   color: #ccc;
   background-color: #222;
   border-color: #444;
-}
-
-/** Main page */
-.card-header {
-  background-color: rgb(183, 212, 242);
-}
-.card-header:hover {
-  background-color: rgb(98, 168, 239);
-}
-.list-group-item {
-  background-color: rgb(240, 237, 237);
-}
-.list-group-item:hover {
-  background-color: rgb(195, 192, 192);
-}
-li {
-  padding-right: 10px;
-}
-.FirstLineCard {
-  padding-right: 20px;
 }
