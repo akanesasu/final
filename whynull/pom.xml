@@ -17,7 +17,7 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <org.apache.logging.log4j-version>2.17.2</org.apache.logging.log4j-version>
-    <maven.war.plugin-version>2.4</maven.war.plugin-version>
+    <maven.war.plugin-version>3.3.1</maven.war.plugin-version>
     <webAppDir>target/classes</webAppDir>
     <webXmlPath>src/main/webapp/WEB-INF/web.xml</webXmlPath>
   </properties>
@@ -290,6 +290,19 @@
       <version>2.3.2</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
+    <dependency>
+      <groupId>com.jcraft</groupId>
+      <artifactId>jsch</artifactId>
+      <version>0.1.55</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.12.0</version>
+    </dependency>
   </dependencies>
 
   <build>
