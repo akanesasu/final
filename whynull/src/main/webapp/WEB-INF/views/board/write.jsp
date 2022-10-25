@@ -89,7 +89,8 @@
             </script>
             <br>
             <div class="text-end">
-                <button type="submit" class="btn btn-secondary mb-3">작성</button>
+                <button type="submit" data-oper='modify' class="btn btn-secondary mb-3">등록</button>
+                <button type="submit" data-oper='list' class="btn btn-secondary mb-3">취소</button>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
@@ -102,6 +103,19 @@
 </div> <!-- END BODY -->
 
 <script>
+$(document).on("click", function(e) {
+    let form = $("form");
+    $('button').on("click", function(e) {
+        e.preventDefault();
+        let operation = $(this).data("oper");
+
+        if(operation === 'list') {
+            history.back();
+        }
+
+        form.submit();
+    });
+});
 </script>
 </body>
 </html>
