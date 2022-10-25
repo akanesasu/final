@@ -16,4 +16,6 @@ public interface ReplyMapper {
     int modify(ReplyDTO dto);
 
     List<ReplyDTO> getList(@Param("cri") ReplyCriteria cri, @Param("dto") ReplyDTO dto);
+
+    int getCountByPostNum(ReplyDTO dto);
 }

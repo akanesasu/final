@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.whynull.domain.ReplyDTO;
+import org.whynull.domain.ReplyPageDTO;
 import org.whynull.domain.criteria.Criteria;
 import org.whynull.domain.criteria.ReplyCriteria;
 import org.whynull.service.ReplyService;
@@ -29,55 +30,55 @@ public class ReplyController {
     }
 
     @GetMapping(value = "/pages/{boardNum}/{postNum}/{pageNum}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ReplyDTO>> getList(
+    public ResponseEntity<ReplyPageDTO> getList(
             @PathVariable("boardNum") Long boardNum,
             @PathVariable("pageNum") int pageNum,
             @PathVariable("postNum") Long postNum,
             ReplyDTO dto) {
         log.info("Get List =================================== ");
-        ReplyCriteria cri = new ReplyCriteria(pageNum, 10);
+        ReplyCriteria cri = new ReplyCriteria(pageNum);
         log.info(cri);
         dto.setBoardNum(boardNum);
         dto.setPostNum(postNum);
-        return new ResponseEntity<>(service.getList(cri, dto), HttpStatus.OK);
+        return new ResponseEntity<>(service.getListPage(cri, dto), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{boardNum}/{postNum}/{replyNum}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplyDTO> read(
-            @PathVariable("boardNum") Long boardNum,
-            @PathVariable("postNum") Long postNum,
+            @PathVariable("boardNum") String boardNum,
+            @PathVariable("postNum") String postNum,
             @PathVariable("replyNum") Long replyNum,
             ReplyDTO dto) {
         log.info("Read Reply : " + replyNum);
         dto.setReplyNum(replyNum);
-        dto.setPostNum(postNum);
-        dto.setBoardNum(boardNum);
+        dto.setPostNum(Long.parseLong(postNum));
+        dto.setBoardNum(Long.parseLong(boardNum));
         return new ResponseEntity<>(service.get(dto), HttpStatus.OK);
     }
 
     @DeleteMapping(value="/{boardNum}/{postNum}/{replyNum}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> remove(
-            @PathVariable("boardNum") Long boardNum,
-            @PathVariable("postNum") Long postNum,
+            @PathVariable("boardNum") String boardNum,
+            @PathVariable("postNum") String postNum,
             @PathVariable("replyNum") Long replyNum,
             ReplyDTO dto) {
         log.info("Remove Reply : " + replyNum);
         dto.setReplyNum(replyNum);
-        dto.setPostNum(postNum);
-        dto.setBoardNum(boardNum);
+        dto.setPostNum(Long.parseLong(postNum));
+        dto.setBoardNum(Long.parseLong(boardNum));
         return service.remove(dto) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping(value = "/{boardNum}/{postNum}/{replyNum}", consumes = "application/json", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> modify(
             @RequestBody ReplyDTO dto,
-            @PathVariable("boardNum") Long boardNum,
-            @PathVariable("postNum") Long postNum,
+            @PathVariable("boardNum") String boardNum,
+            @PathVariable("postNum") String postNum,
             @PathVariable("replyNum") Long replyNum) {
-        dto.setReplyNum(replyNum);
-        dto.setPostNum(postNum);
-        dto.setBoardNum(boardNum);
         log.info("replyNum : " + replyNum);
+        dto.setReplyNum(replyNum);
+        dto.setPostNum(Long.parseLong(postNum));
+        dto.setBoardNum(Long.parseLong(boardNum));
         log.info("Modify Reply : " + dto);
         return service.modify(dto) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -43,7 +43,7 @@
 <div class="row">
     <div class="col-4 text-start">
         <button type="button" class="btn" style="background-color:#FFAD41;">스크랩</button>
-        <button type="button" class="btn" style="background-color:#FF7A7A;" data-bs-toggle="modal" data-bs-target="#staticBackdropLive">신고</button>
+        <button type="button" class="btn" style="background-color:#FF7A7A;">신고</button>
     </div>
     <div class="col-4 d-flex" style="justify-content: center; align-items: center;">
         <span class="fw-bold mx-1 fs-6">추천수</span>
@@ -52,8 +52,8 @@
         <span class="fw-bold mx-1 fs-6">비추수</span>
     </div>
     <div class="col-4 text-end">
-        <c:if test="${principal.username eq read.mem_id}"><button type="button" class="btn btn-secondary mx-1">수정</button></c:if>
-        <c:if test="${principal.username eq read.mem_id}"><button type="button" class="btn btn-secondary">삭제</button></c:if>
+        <c:if test="${principal.username eq read.mem_id}"><button type="button" data-oper='edit' class="btn btn-secondary mx-1">수정</button></c:if>
+        <c:if test="${principal.username eq read.mem_id}"><button type="button" data-oper='delete' class="btn btn-secondary">삭제</button></c:if>
     </div>
 </div>
 
@@ -67,6 +67,10 @@
     <ul class="reply_item" style="list-style:none; padding-left:0px;">
     </ul>
 </div>
+<div class="reply_paging">
+
+</div>
+<hr class='my-4'/>
 
 <div class="reply_write" style="background-color: rgb(241, 241, 241)">
     <div class='row mb-3 p-2'>
@@ -75,8 +79,24 @@
         <div class='col-1 text-end'><button class="btn btn-primary" id="writeReply" style="background-color:#00487F;">등록</button></div>
     </div>
 </div>
-
 </div> <!-- END Container -->
+
+<!-- Modal -->
+<div class="modal fade" id="modalReply" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-body">
+        <div class='p-2 text-start form-group w-50'><input class="form-control fw-bold" id="modalReplyInputReplyer" name="replyer" value="<sec:authentication property='principal.username'/>" disabled></div>
+        <div class='p-2 form-group'><textarea rows="2" cols="300" id="modalReplyInputTA", class="replyTA form-control" name="reply"></textarea></div>
+    </div>
+    <div class="modal-footer">
+        <button id="modalReplyModBtn" type="button" class="btn btn-sm" style="background-color:#00487F; color:white">수정</button>
+        <button id="modalReplyRmvBtn" type="button" class="btn btn-sm" style="background-color:#EF0000; color:white">삭제</button>
+        <button id="modalReplyCloseBtn" type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">취소</button>
+    </div>
+</div>
+</div>
+</div>
 
 <%@include file="../includes/footer.jsp"%>
 
@@ -108,14 +128,17 @@ let replyService = (function() {
 
         $.getJSON("../reply/pages/" + boardNum + "/" + postNum + "/" + page,
             function(data) {
-                if(callback) { callback(data); }
+                if(callback) { callback(data.replyCount, data.list); }
             }
         ).fail(function(xhr, status, err) {
             if(error) { error(); }
         });
     }
 
-    function remove(replyNum, callback, error) {
+    function remove(param, callback, error) {
+        let postNum = param.postNum;
+        let boardNum = param.boardNum;
+        let replyNum = param.replyNum;
         $.ajax({
             type: 'delete',
             url: '../reply/' + boardNum + "/"  + postNum + "/" + replyNum,
@@ -128,11 +151,13 @@ let replyService = (function() {
         });
     }
 
-    function modify(reply, callback, error) {
-        console.log("replyNum : " + reply.replyNum);
+    function edit(param, reply, callback, error) {
+        let postNum = param.postNum;
+        let boardNum = param.boardNum;
+        let replyNum = param.replyNum;
         $.ajax({
             type: 'post',
-            url: '../reply/' + reply.boardNum + "/"  + reply.postNum + "/" + reply.replyNum,
+            url: '../reply/' + boardNum + "/"  + postNum + "/" + replyNum,
             data: JSON.stringify(reply),
             contentType: "application/json; charset=utf-8",
             success: function(result, status, xhr) {
@@ -144,7 +169,11 @@ let replyService = (function() {
         });
     }
 
-    function read(replyNum, callback, error) {
+    function read(param, callback, error) {
+        let postNum = param.postNum;
+        let boardNum = param.boardNum;
+        let replyNum = param.replyNum;
+
         $.get("../reply/" + boardNum + "/"  + postNum + "/" + replyNum, function(result) {
             if(callback) { callback(result); }
         }).fail(function(xhr, status, err) {
@@ -188,7 +217,7 @@ let replyService = (function() {
         write:write,
         getList:getList,
         remove:remove,
-        modify:modify,
+        edit:edit,
         read:read,
         displayTime:displayTime,
     };
@@ -206,44 +235,97 @@ $(document).ready(function() {
     showList(1);
 
     function showList(page) {
-        replyService.getList({boardNum:boardNum, postNum:postNum, page:page||1}, function(list) {
+        replyService.getList({boardNum:boardNum, postNum:postNum, page:page||1}, function(replyCount, list) {
+            if(page == -1) {
+                pageNum = Math.ceil(replyCount/10.0);
+                showList(pageNum);
+                return;
+            }
+
             let str="";
+
             if(list==null || list.length==0) {
-                replyUl.html("");
                 return;
             }
             for(let i=0, len=list.length||0; i<len; i++) {
-                str += "<li class='left clearfix' data-rno='" + list[i].replyNum + "'>";
+                str += "<li class='left clearfix' id='replynum' data-replynum='" + list[i].replyNum + "'>";
                 str += "    <div class='row mb-3'>";
-                str += "        <div class='col-2 text-start fw-bold'>" + list[i].replyer + "</div>";
+                str += "        <div class='col-2 text-start fw-bold' data-replyer='"+ list[i].replyer + "'>" + list[i].replyer + "</div>";
                 str += "        <div class='p-0 col-7 comment_text'>" + list[i].reply + "</div>";
                 str += "        <div class='col-3 text-end'>"
                 str += "            <span>" + replyService.displayTime(list[i].replyDate) + "</span>"
                 str += "            <span class='sep'></span>"
-                str += "            <a class='hrs' href='#' id='reportReply'>신고</a>"
-                str += "            <span class='sep'></span>"
-                str += "            <a class='hrs' href='#' id='reReply'>답글</a>"
-                str += "            <span class='sep'></span>"
-                str += "            <a class='hrs' href='#' id='modReply'>수정</a>"
-                str += "            <span class='sep'></span>"
-                str += "            <a class='hrs' href='#' id='rmvReply'>삭제</a>"
+                str += "            <a class='hrs' href='javascript:' id='modReply'>수정/삭제</a>"
                 str += "        </div>"
                 str += "    </div>"
                 str += "</li>"
-                str += "<hr class='my-4'/>";
             }
             replyUl.html(str);
+            showReplyPage(replyCount);
         });
     } //showList
+
+    let pageNum = 1;
+    let replyPaging = $(".reply_paging");
+
+    function showReplyPage(replyCount) {
+        let end = Math.ceil(pageNum/10.0)*10;
+        let start = end - 9;
+        let prev = start != 1;
+        let next = false;
+
+        if(end*10 >= replyCount) {
+            end = Math.ceil(replyCount/10.0);
+        }
+
+        if(end*10 < replyCount) {
+            next = true;
+        }
+
+        let str = "<ul class='pagination' style='justify-content: center'>";
+        if(prev) {
+            str += "<li class='page-item'><a class='page-link' href='" + (start-1) + "'>Prev</a></li>";
+        }
+
+        for(let i=start; i<=end; i++) {
+            let active = pageNum == i ? "active" : "";
+            str += "<li class='page-item " + active + " '><a class='page-link' href='" + i + "'>" + i + "</a></li>";
+        }
+
+        if(next) {
+            str += "<li class='page-item'><a class='page-link' href='" + (end+1) +"'>Next</a></li>";
+        }
+
+        str += "</ul></div>";
+
+        replyPaging.html(str);
+    }
+
+    replyPaging.on("click", "li a", function(e) {
+        e.preventDefault();
+        let target = $(this).attr("href");
+        pageNum = target;
+        showList(pageNum);
+    });
 
     let replyTotal = $(".reply_total");
     let replyInputTA = replyTotal.find("textarea[name='reply']");
     let replyInputReplyer = replyTotal.find("input[name='replyer']");
     let writeReply = $("#writeReply");
-    let replyReportReply = $("#reportReply");
-    let replyReReply = $("#reReply");
     let replyModReply = $("#modReply");
-    let replyRmvReply = $("#rmvReply");
+
+    let modalReply = $("#modalReply");
+    let modalReplyInputTA = modalReply.find("textarea[name='reply']");
+    let modalReplyInputReplyer = modalReply.find("input[name='replyer']");
+    let modalReplyModBtn = $("#modalReplyModBtn");
+    let modalReplyRmvBtn = $("#modalReplyRmvBtn");
+    let modalReplyCloseBtn = $("#modalReplyCloseBtn");
+
+    let replyer = null;
+
+    <sec:authorize access="isAuthenticated()">
+        replyer = '<sec:authentication property="principal.username"/>';
+    </sec:authorize>
 
     writeReply.on("click", function(e) {
         let reply = {
@@ -254,11 +336,76 @@ $(document).ready(function() {
         };
 
         replyService.write(reply);
-        showList(1);
+        showList(-1);
+    });
+
+    $(".reply_item").on("click", "li", function() {
+        let replyNum = $(this).data("replynum");
+        let originalReplyer = replyInputReplyer.val();
+
+        if(replyer != originalReplyer){
+            alert("자신이 작성한 댓글만 수정이 가능합니다.");
+            modal.modal("hide");
+            return;
+        }
+
+        replyService.read({boardNum:boardNum, postNum:postNum, replyNum:replyNum}, function(reply) {
+            modalReplyInputTA.val(reply.reply);
+            modalReplyInputReplyer.val(reply.replyer);
+            modalReply.data("replynum", replyNum);
+
+            modalReply.find("button[id!='modalReplyCloseBtn']").hide();
+            modalReplyModBtn.show();
+            modalReplyRmvBtn.show();
+            modalReplyCloseBtn.show();
+
+            $("#modalReply").modal("show");
+        });
+    });
+
+    modalReplyModBtn.on("click", function(e) {
+        let reply = {
+            replyNum: modalReply.data("replynum"),
+            reply: modalReplyInputTA.val(),
+            replyer: modalReplyInputReplyer.val(),
+        };
+
+        replyService.edit({boardNum:boardNum, postNum:postNum, replyNum:reply.replyNum}, reply, function(result) {
+            modalReply.modal("hide");
+            showList(pageNum);
+        });
+    });
+
+    modalReplyRmvBtn.on("click", function(e) {
+        let reply = {
+            replyNum: modalReply.data("replynum"),
+            reply: modalReplyInputTA.val(),
+            replyer: modalReplyInputReplyer.val(),
+        };
+
+        replyService.remove({boardNum:boardNum, postNum:postNum, replyNum:reply.replyNum}, function(result) {
+            modalReply.modal("hide");
+            showList(pageNum);
+        });
     });
 });
-
 </script>
 
+<script>
+$(document).ready(function() {
+    let boardNum = '<c:out value="${read.board_num}"/>';
+    let postNum = '<c:out value="${read.post_num}"/>';
+
+    $('button').on("click", function() {
+        let oper = $(this).data("oper");
+
+        if(oper === 'delete') {
+
+        } else if(oper === 'edit') {
+            self.location="/whynull/board/edit?boardNum=" + boardNum  + "&postNum=" + postNum;
+        }
+    });
+});
+</script>
 </body>
 </html>

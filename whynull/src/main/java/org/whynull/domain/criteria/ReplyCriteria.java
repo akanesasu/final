@@ -9,8 +9,8 @@ public class ReplyCriteria {
     private int pageNum;
     private int amount;
 
-    public ReplyCriteria(int pageNum, int amount) {
+    public ReplyCriteria(int pageNum) {
         this.pageNum = pageNum;
-        this.amount = amount;
+        this.amount = 10;
     }
 }
