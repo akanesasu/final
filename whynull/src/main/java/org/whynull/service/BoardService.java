@@ -21,4 +21,6 @@ public interface BoardService {
     List<BoardDTO> getMainList2(MainCriteria cri);
     List<BoardDTO> getMainList3(MainCriteria cri);
     List<BoardDTO> getMainList4(MainCriteria cri);
+    boolean edit(BoardDTO dto);
+    boolean delete(BoardDTO dto);
 }

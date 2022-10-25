@@ -65,20 +65,20 @@
     <select id="getList" resultType="org.whynull.domain.BoardDTO">
         with board_temp as (
             select row_number() over (order by post_num desc) as rn,
-                post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content, post_good_count
-        from <include refid="board_choose"></include> use index(primary)
+                    post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content, post_good_count, reply_count
+                from <include refid="board_choose"></include> use index(primary)
         )
 
-        select post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content, post_good_count
-        from board_temp
+        select post_num, board_num, subject_content, writing_date, mem_id, post_view_count, post_title, post_content, post_good_count, reply_count
+            from board_temp
             where
 
-        <include refid="subject_head"></include>
-        <include refid="boardNum"></include>
+                <include refid="subject_head"></include>
+                <include refid="boardNum"></include>
 
-        <![CDATA[
+            <![CDATA[
                 (rn <= #{pageNum}*#{amount} and rn > (#{pageNum}-1)*#{amount})
-        ]]>
+            ]]>
     </select>
 
     <select id="getMainList1" resultType="org.whynull.domain.BoardDTO">
@@ -160,4 +160,16 @@
     <update id="viewCount">
         update <include refid="board_choose"></include> set post_view_count = post_view_count + 1 where post_num = #{post_num}
     </update>
+
+    <update id="updateReplyCount">
+        update <include refid="board_choose"></include> set reply_count = reply_count + #{amount} where post_num = #{post_num}
+    </update>
+
+    <update id="edit">
+        update <include refid="board_choose"></include> set post_title=#{post_title}, post_content=#{post_content}, subject_content=#{subject_content}, writing_date=now() where post_num = #{post_num}
+    </update>
+
+    <delete id="delete">
+        delete from <include refid="board_choose"></include> where post_num = #{post_num}
+    </delete>
 </mapper>

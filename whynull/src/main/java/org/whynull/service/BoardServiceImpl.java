@@ -61,6 +61,19 @@ public class BoardServiceImpl implements BoardService {
         return mapper.getMainList4(cri);
     }
 
+    @Transactional
+    @Override
+    public boolean edit(BoardDTO dto) {
+        log.info("Edit the article : " + dto);
+        return mapper.edit(dto) == 1;
+    }
+
+    @Override
+    public boolean delete(BoardDTO dto) {
+        log.info("Delete the article : " + dto);
+        return mapper.delete(dto) == 1;
+    }
+
     @Override
     public int getTotal(Criteria cri) {
         return mapper.getTotal(cri);

@@ -17,4 +17,7 @@ public interface BoardMapper {
     List<BoardDTO> getMainList2(MainCriteria cri);
     List<BoardDTO> getMainList3(MainCriteria cri);
     List<BoardDTO> getMainList4(MainCriteria cri);
+    void updateReplyCount(@Param("post_num") Long postNum, @Param("amount") int amount, @Param("boardNum") Long boardNum);
+    int edit(BoardDTO dto);
+    int delete(BoardDTO dto);
 }

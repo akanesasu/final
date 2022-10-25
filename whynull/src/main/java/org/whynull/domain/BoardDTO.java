@@ -22,6 +22,8 @@ public class BoardDTO {
     private String post_title;
     private String post_content;
     private Long post_good_count;
+    private int replyCount;
+    private int reply_count = replyCount;
 
     private List<WriteDTO> filesList;
     public String[] getBoardNumArr() {

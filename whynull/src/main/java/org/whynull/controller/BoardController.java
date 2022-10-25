@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -58,9 +59,32 @@ public class BoardController {
     }
 
     @GetMapping("/edit")
-    public void edit(@RequestParam("boardNum") Long board_num, @RequestParam("postNum") Long post_num, Model model) {
+    public void edit(@RequestParam("boardNum") Long board_num, @RequestParam("postNum") Long post_num, HeadListCriteria cri, Model model) {
         log.info("/edit");
-        model.addAttribute("board", service.read(board_num, post_num));
+        model.addAttribute("read", service.read(board_num, post_num));
+        model.addAttribute("headList", service.getWriteHeadList(cri));
+    }
+
+    @PostMapping("/edit")
+    @PreAuthorize("principal.username == #mem_id")
+    public String edit(BoardDTO dto, RedirectAttributes rttr) {
+        log.info("edit : " + dto);
+        if (service.edit(dto)) {
+            rttr.addFlashAttribute("result", "success");
+        }
+
+        return "redirect:/board/read?boardNum=" + dto.getBoardNum() + "&postNum=" + dto.getPost_num();
+    }
+
+    @PostMapping("/delete")
+    @PreAuthorize("principal.username == #mem_id")
+    public String delete(BoardDTO dto, RedirectAttributes rttr) {
+        log.info("delete : " + dto.getPost_num());
+        if (service.delete(dto)) {
+            rttr.addFlashAttribute("result", "success");
+        }
+
+        return "redirect:/board/list?boardNum=" + dto.getBoardNum() + "&pageNum=1";
     }
 
     @GetMapping(value="/getContentList", produces = MediaType.APPLICATION_JSON_VALUE)
