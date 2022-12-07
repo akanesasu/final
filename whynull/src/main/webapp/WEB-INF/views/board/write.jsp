@@ -29,7 +29,7 @@
                         <c:forEach items="${headList}" var="outer" varStatus="status">
                             <c:forEach items="${outer}" var="inner">
                                 <div class="form-check form-check-inline">
-                                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio1" value="${inner}">
+                                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio1" value="${inner}" >
                                    <label class="form-check-label" for="inlineRadio1">${inner}</label>
                                 </div>
                             </c:forEach>
@@ -51,16 +51,6 @@
                                 <div class="form-check form-check-inline">
                                    <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio3" value="${inner}">
                                    <label class="form-check-label" for="inlineRadio3">${inner}</label>
-                                </div>
-                            </c:forEach>
-                        </c:forEach>
-                    </c:when>
-                    <c:when test="${param.boardNum == '4'}">
-                        <c:forEach items="${headList}" var="outer" varStatus="status">
-                            <c:forEach items="${outer}" var="inner">
-                                <div class="form-check form-check-inline">
-                                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio4" value="${inner}">
-                                   <label class="form-check-label" for="inlineRadio4">${inner}</label>
                                 </div>
                             </c:forEach>
                         </c:forEach>
