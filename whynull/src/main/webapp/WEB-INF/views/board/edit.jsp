@@ -55,16 +55,6 @@
                             </c:forEach>
                         </c:forEach>
                     </c:when>
-                    <c:when test="${param.boardNum == '4'}">
-                        <c:forEach items="${headList}" var="outer" varStatus="status">
-                            <c:forEach items="${outer}" var="inner">
-                                <div class="form-check form-check-inline">
-                                   <input class="form-check-input" name="subject_content" type="radio" id="inlineRadio4" value="${inner}">
-                                   <label class="form-check-label" for="inlineRadio4">${inner}</label>
-                                </div>
-                            </c:forEach>
-                        </c:forEach>
-                    </c:when>
                 </c:choose>
             </div>
             <div class="form-group d-flex my-2" style="align-items: center;">
@@ -91,7 +81,7 @@
             <br>
             <div class="text-end">
                 <button type="submit" data-oper='edit' class="btn btn-secondary mb-3">등록</button>
-                <button type="submit" data-oper='list' class="btn btn-secondary mb-3">취소</button>
+                <a href="/whynull/board/read?boardNum=${param.boardNum}&postNum=${param.postNum}" class="btn btn-secondary mb-3">취소</a>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
@@ -117,6 +107,17 @@ $(document).ready(function() {
         form.submit();
     });
 });
+
+//말머리 체크
+let subcon  = document.getElementsByName('subject_content');
+
+for(let i=0;i<subcon.length;i++) {
+    if(subcon[i].value == '<c:out value="${read.subject_content}"/>') {
+        subcon[i].checked = true;
+        break;
+    }
+}
+
 </script>
 </body>
 </html>
